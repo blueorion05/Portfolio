@@ -1,0 +1,178 @@
+export const profile = {
+  name: 'Gerald Jhudiel D. Atienza',
+  address: 'Brgy. Santa Monica, San Pablo City, Laguna, Philippines 4000',
+  email: 'jhudielatienza2k20@gmail.com',
+  phone: '09614941414',
+  role: 'Computer Science Graduate Specialized in Intelligent Systems',
+  thesis: 'Smart Grade',
+}
+
+export const education = [
+  {
+    school: 'Laguna State Polytechnic University',
+    place: 'San Pablo, LAG',
+    degree: 'Bachelor of Science in Computer Science, Specialized in Intelligent Systems',
+    date: 'June 2026',
+    note: 'Thesis: Smart Grade',
+  },
+  {
+    school: 'San Pablo City Science Integrated High School',
+    place: 'San Pablo, LAG',
+    degree: 'STEM - With Honors',
+    date: 'July 2022',
+    note: 'Senior high school foundation in science and technology',
+  },
+]
+
+export const experience = [
+  {
+    title: 'Helping Youth Transcend Foundation Inc.',
+    place: 'Quezon City, PH',
+    role: 'Intern',
+    date: 'February 2026 - May 2026',
+    points: [
+      'Contributed to the design, development, and deployment of web-based systems in a professional technology environment.',
+      'Applied skills in UI/UX design, system testing, troubleshooting, and digital solution implementation.',
+      'Collaborated with cross-functional teams to support project execution, process improvement, and organizational objectives.',
+      'Developed professional competencies in problem-solving, communication, teamwork, and project management through hands-on industry experience.',
+    ],
+  },
+]
+
+export const projects = [
+  {
+    title: 'HYT Global Landing Page',
+    category: 'Web Application',
+    stack: 'React, Vite, Tailwind CSS, Firebase',
+    description:
+      'Developed a comprehensive single-page landing website showcasing HYT Global Institute’s professional training programs, course offerings, and facilities.',
+    details: [
+      'Integrated Firebase backend services and implemented responsive design using Tailwind CSS and DaisyUI components with professional course photography.',
+      'Implemented 9 key sections including home, courses, student success stories, admissions process, and contact form with validation to enhance user engagement and streamline lead generation.',
+    ],
+  },
+  {
+    title: 'bookMe',
+    category: 'Web Application',
+    stack: 'JavaScript, React, Vite',
+    description:
+      'Built a responsive booking and appointment management system with real-time scheduling capabilities and form validation.',
+    details: [
+      'Implemented Firebase authentication and Firestore integration with role-based access control for secure admin operations and booking management.',
+      'Built a comprehensive platform with client booking interface and admin dashboard to streamline reservation workflows and improve service delivery.',
+    ],
+  },
+  {
+    title: 'HYTech Learning Management System',
+    category: 'Web Application',
+    stack: 'React, JSX, Firebase, Tailwind CSS',
+    description:
+      'Developed a comprehensive Learning Management System with role-based access control for Admin, Trainer, Student, and Supervisor users with granular permission management.',
+    details: [
+      'Implemented administrative features including user management, class CRUD operations, and system logging with real-time data synchronization using Firebase and Firestore.',
+      'Deployed via Vite and Firebase Hosting with optimized performance.',
+    ],
+  },
+  {
+    title: 'Smart Grade',
+    category: 'Web Application',
+    stack: 'JavaScript, JSX',
+    description: 'Developed a centralized system to manage students’ personal and academic records.',
+    details: [
+      'Integrated predictive capability to analyze academic performance and flag students at risk of academic failure.',
+      'Improved data accessibility and organization for streamlined student monitoring.',
+    ],
+  },
+  {
+    title: 'SemaREC',
+    category: 'Web Application',
+    stack: 'HTML, CSS, JavaScript, Python',
+    description:
+      'Built a web tool that translates semaphore flag positions into individual letters (A-Z).',
+    details: [
+      'Trained a YOLO model to detect semaphore flag positions real-time, images or videos, enabling automated letter recognition.',
+    ],
+  },
+  {
+    title: 'Obby But You’re Sonic',
+    category: 'Roblox Game',
+    stack: 'Lua, Roblox Studio',
+    description:
+      'Designed and developed a 3D obstacle course game on Roblox with Sonic-themed mechanics.',
+    details: [
+      'Implemented player movement, speed mechanics, and interactive obstacles using Lua scripting.',
+      'Created engaging levels with progressively challenging obstacles to enhance player experience.',
+    ],
+  },
+  {
+    title: 'LocalLoan',
+    category: 'Android Application',
+    stack: 'Java, Android Studio',
+    description:
+      'Developed an Android application to provide microfinance assistance and improve financial literacy.',
+    details: [
+      'Enabled users to discover and navigate nearby microfinance establishments using location-based services.',
+      'Implemented financial tools such as loan and savings calculators and trackers to support better decision-making.',
+    ],
+  },
+  {
+    title: 'ProductEase',
+    category: 'WinForms Desktop Application',
+    stack: 'C#',
+    description:
+      'Developed a Point of Sale desktop application to manage product inventory, sales transactions, and customer receipts.',
+    details: ['Built core features including product registration, price updates, billing, and transaction tracking.'],
+  },
+]
+
+export const certifications = [
+  'Cybersecurity - Certiport, May 2026',
+  'Python Essentials 1 - Cisco, Sept. 2024',
+  'Artificial Intelligence Fundamentals - IBM, Sept. 2024',
+  'Introduction to Data Science - Cisco, Oct. 2024',
+  'Introduction to Cyber Security - Cisco, Oct. 2024',
+  'Agile Explorer - IBM, Oct. 2024',
+  'Project Management Fundamentals - IBM, Dec. 2024',
+]
+
+export const skills = [
+  'C#',
+  'Java',
+  'Python',
+  'Lua',
+  'JavaScript',
+  'UI/UX Design',
+  'System Testing',
+  'Troubleshooting',
+  'Firebase',
+  'React',
+  'Vite',
+  'Android Studio',
+  'Roblox Studio',
+  'Machine Learning',
+  'Computer Vision',
+  'Project Management',
+]
+
+export const interests = ['Playing Games', 'Watching Series/Movies', 'Application Development']
+
+export const navigationLinks = [
+  { label: 'Home', href: '/home' },
+  { label: 'Education', href: '/education' },
+  { label: 'Experience', href: '/experience' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Skills', href: '/skills' },
+  { label: 'Certifications', href: '/certifications' },
+  { label: 'Contact', href: '/contact' },
+]
+
+export default {
+  profile,
+  education,
+  experience,
+  projects,
+  certifications,
+  skills,
+  interests,
+  navigationLinks,
+}
