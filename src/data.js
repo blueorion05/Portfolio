@@ -10,17 +10,17 @@ export const profile = {
 export const education = [
   {
     school: 'Laguna State Polytechnic University',
-    place: 'San Pablo, LAG',
+    place: 'San Pablo City, Laguna',
     degree: 'Bachelor of Science in Computer Science, Specialized in Intelligent Systems',
     date: 'June 2026',
-    note: 'Thesis: Smart Grade',
+    highlights: ['Magna Cum Laude', 'DOST-SA Awardee'],
   },
   {
     school: 'San Pablo City Science Integrated High School',
-    place: 'San Pablo, LAG',
-    degree: 'STEM - With Honors',
+    place: 'San Pablo City, Laguna',
+    degree: 'Science, Technology, Engineering, and Mathematics (STEM) Strand',
     date: 'July 2022',
-    note: 'Senior high school foundation in science and technology',
+    highlights: ['With Honors'],
   },
 ]
 

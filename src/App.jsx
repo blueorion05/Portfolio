@@ -65,17 +65,17 @@ function App() {
     updateScrollProgress()
     window.addEventListener('scroll', updateScrollProgress, { passive: true })
 
+    const syncInitialLocation = () => {
+      window.history.replaceState({}, '', '/home')
+      scrollToSection('/home')
+    }
+
     const syncSectionFromLocation = () => {
       const normalizedPath = normalizePath(window.location.pathname)
-
-      if (normalizedPath !== window.location.pathname) {
-        window.history.replaceState({}, '', normalizedPath)
-      }
-
       scrollToSection(normalizedPath)
     }
 
-    syncSectionFromLocation()
+    syncInitialLocation()
     window.addEventListener('popstate', syncSectionFromLocation)
 
     return () => {

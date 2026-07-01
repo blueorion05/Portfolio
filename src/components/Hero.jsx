@@ -49,7 +49,7 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
   }
 
   return (
-    <section id="home" className="w-full overflow-hidden border-b border-base-300/20 py-4 lg:py-18">
+    <section id="home" className="w-full overflow-hidden border-b border-base-300/20 py-4 lg:py-19">
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-10">
         <div
           className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/80 px-6 py-8 shadow-[0_32px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-8 sm:py-10 lg:px-12 lg:py-12"
@@ -61,7 +61,6 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:42px_42px] opacity-20" />
           <div className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-sky-400/12 blur-3xl" />
           <div className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl" />
-          <div className="pointer-events-none absolute right-1/4 top-1/4 h-2 w-2 rounded-full bg-sky-300 shadow-[0_0_18px_rgba(125,211,252,0.95)]" />
 
           <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:gap-8">
             <div key={`hero-copy-${heroAnimationSeed}`} className="hero-copy max-w-3xl space-y-6 text-center lg:text-left">
