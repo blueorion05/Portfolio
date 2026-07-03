@@ -126,13 +126,36 @@ export const projects = [
 ]
 
 export const certifications = [
-  'Cybersecurity - Certiport, May 2026',
-  'Python Essentials 1 - Cisco, Sept. 2024',
-  'Artificial Intelligence Fundamentals - IBM, Sept. 2024',
-  'Introduction to Data Science - Cisco, Oct. 2024',
-  'Introduction to Cyber Security - Cisco, Oct. 2024',
-  'Agile Explorer - IBM, Oct. 2024',
-  'Project Management Fundamentals - IBM, Dec. 2024',
+  {
+    title: 'IT Specialist Cybersecurity',
+    issuer: 'Certiport',
+    date: 'May 2026',
+  },
+  {
+    title: 'Web Development Fundamentals',
+    issuer: 'IBM',
+    date: 'May 2026',
+  },
+  {
+    title: 'Javascript Essentials 2',
+    issuer: 'Cisco',
+    date: 'May 2026',
+  },
+  {
+    title: 'Python Essentials 2',
+    issuer: 'Cisco',
+    date: 'March 2026',
+  },
+  {
+    title: 'Artificial Intelligence Fundamentals',
+    issuer: 'IBM',
+    date: 'September 2024',
+  },
+  {
+    title: 'Project Management Fundamentals',
+    issuer: 'IBM',
+    date: 'December 2024',
+  },
 ]
 
 export const skills = [
