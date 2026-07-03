@@ -50,6 +50,70 @@ body {
   -ms-overflow-style: none;
 }
 
+@keyframes skills-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes skills-marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.skills-marquee-wrap {
+  position: relative;
+}
+
+.skills-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.skills-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  will-change: transform;
+  animation: skills-marquee-left 30s linear infinite;
+}
+
+.skills-marquee--reverse .skills-marquee__track {
+  animation-name: skills-marquee-right;
+}
+
+.skills-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 0 0 auto;
+  border-radius: 9999px;
+}
+
+.skills-marquee__icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-marquee__track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 /* Hero entrance animations */
 @keyframes hero-enter-left {
   0% {

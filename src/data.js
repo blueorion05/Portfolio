@@ -177,8 +177,6 @@ export const skills = [
   'Project Management',
 ]
 
-export const interests = ['Playing Games', 'Watching Series/Movies', 'Application Development']
-
 export const navigationLinks = [
   { label: 'Home', href: '/home' },
   { label: 'Education', href: '/education' },
@@ -196,6 +194,5 @@ export default {
   projects,
   certifications,
   skills,
-  interests,
   navigationLinks,
 }
