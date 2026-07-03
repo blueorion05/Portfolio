@@ -193,3 +193,37 @@ body {
     filter: none !important;
   }
 }
+
+/* Projects entrance animation */
+@keyframes project-card-enter {
+  0% {
+    opacity: 0;
+    transform: perspective(900px) translateY(36px) translateZ(140px) scale(0.82);
+    filter: blur(10px);
+  }
+  70% {
+    opacity: 1;
+    transform: perspective(900px) translateY(-4px) translateZ(14px) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(900px) translateY(0) translateZ(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.project-card {
+  animation: project-card-enter 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+  transform-origin: center top;
+  will-change: transform, opacity, filter;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

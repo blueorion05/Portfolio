@@ -99,10 +99,10 @@ function App() {
           onHeroVisibilityChange={setHeroNameVisible}
           onNavigateSection={handleSectionNavigation}
         />
-        <Education education={data.education} />
         <Experience experience={data.experience} />
         <Projects projects={data.projects} />
         <Skills skills={data.skills} interests={data.interests} />
+        <Education education={data.education} />
         <Certifications certifications={data.certifications} />
         <Contact profile={data.profile} />
       </div>
