@@ -27,7 +27,7 @@ export const education = [
 export const experience = [
   {
     title: 'Helping Youth Transcend Foundation Inc.',
-    place: 'Quezon City, PH',
+    place: 'Quezon City, Philippines',
     role: 'Intern',
     date: 'February 2026 - May 2026',
     points: [
