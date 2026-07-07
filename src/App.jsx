@@ -130,8 +130,8 @@ function App() {
           experience={data.experience}
           certifications={data.certifications}
         />
-        <Projects projects={data.projects} />
         <Skills skills={data.skills} interests={data.interests} />
+        <Projects projects={data.projects} />
         <Contact profile={data.profile} />
       </div>
 

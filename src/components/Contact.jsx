@@ -118,7 +118,7 @@ export default function Contact({ profile }) {
               ))}
 
               <div className="rounded-2xl border border-base-300/50 bg-gradient-to-br from-base-100 to-base-200 p-5 shadow-lg shadow-black/10">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Quick Links</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em]">Quick Links</p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   <a href={`mailto:${profile.email}`} className="btn bg-pink-700 rounded-full">
                     Email Me
