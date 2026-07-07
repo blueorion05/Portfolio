@@ -135,6 +135,13 @@ function App() {
         <Contact profile={data.profile} />
       </div>
 
+      <footer className="border-t border-base-300/40 bg-base-200/60 px-4 py-6 text-center text-sm text-base-content/70 sm:px-6 lg:px-10">
+        <p>© 2026 Gerald Jhudiel D. Atienza. All rights reserved.</p>
+        <p className="mt-2">
+          Built with <span aria-hidden="true">React + Javascript + Vite + Tailwind CSS + DaisyUI</span>
+        </p>
+      </footer>
+
       {scrollProgress > 0.08 && (
         <button
           type="button"

@@ -166,12 +166,12 @@ export default function Skills({ skills = [] }) {
   const visibleSkillGroups = getVisibleSkillGroups(skills)
 
   return (
-    <section id="skills" className="mx-auto max-w-6xl space-y-10 border-b border-base-300/30 px-4 py-20 sm:px-6 lg:px-10">
+    <section id="tech" className="mx-auto max-w-6xl space-y-10 border-b border-base-300/30 px-4 py-20 sm:px-6 lg:px-10">
       <div className="mb-8 max-w-3xl">
-        <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Skills & Interests</p>
+        <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Tech Stack</p>
         <h2 className="text-3xl font-black tracking-tight sm:text-4xl">Technical strengths and personal interests</h2>
         <p className="mt-3 max-w-2xl text-sm text-base-content/70 sm:text-base">
-          Grouped by type for easier browsing, with logo-backed skills using their assets and everything else shown as a clean letter badge.
+          A list of technologies and tools I've worked with.
         </p>
       </div>
 
