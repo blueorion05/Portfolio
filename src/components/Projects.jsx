@@ -60,7 +60,7 @@ export default function Projects({ projects = [] }) {
   }, [])
 
   return (
-    <section ref={sectionRef} id="projects" className="w-full border-b border-base-300/30 px-4 py-20 sm:px-6 lg:px-10">
+    <section ref={sectionRef} id="projects" className="mx-auto max-w-6xl space-y-10 border-b border-base-300/30 px-4 py-20 sm:px-6 lg:px-10">
       <div className="mb-8">
         <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Projects</p>
         <h2 className="text-3xl font-black tracking-tight sm:text-4xl">Selected work</h2>

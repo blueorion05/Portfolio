@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Contact({ profile }) {
   return (
-    <section id="contact" className="w-full px-4 py-16 sm:px-6 lg:px-10">
+    <section id="contact" className="mx-auto max-w-6xl space-y-10 px-4 py-16 sm:px-6 lg:px-10">
       <div className="card overflow-hidden border border-base-300/40 bg-base-200/70 shadow-2xl backdrop-blur-xl">
         <div className="card-body gap-6 p-6 sm:p-8 lg:p-10">
           <div className="max-w-3xl space-y-4">

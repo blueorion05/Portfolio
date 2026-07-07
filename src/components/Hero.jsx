@@ -49,7 +49,7 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
   }
 
   return (
-    <section id="home" className="w-full overflow-hidden border-b border-base-300/20 py-4 lg:py-19">
+    <section id="home" className="mx-auto max-w-6xl space-y-10 overflow-hidden border-b border-base-300/20 py-4 lg:py-19">
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-10">
         <div
           className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/80 px-6 py-8 shadow-[0_32px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-8 sm:py-10 lg:px-12 lg:py-12"

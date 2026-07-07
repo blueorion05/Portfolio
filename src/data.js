@@ -179,11 +179,9 @@ export const skills = [
 
 export const navigationLinks = [
   { label: 'Home', href: '/home' },
-  { label: 'Experience', href: '/experience' },
+  { label: 'About', href: '/about' },
   { label: 'Projects', href: '/projects' },
   { label: 'Skills', href: '/skills' },
-  { label: 'Education', href: '/education' },
-  { label: 'Certifications', href: '/certifications' },
   { label: 'Contact', href: '/contact' },
 ]
 

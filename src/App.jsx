@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import Education from './components/Education'
-import Experience from './components/Experience'
+import AboutSection from './components/AboutSection'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
-import Certifications from './components/Certifications'
 import Contact from './components/Contact'
 import data from './data'
+import { FaArrowUp } from "react-icons/fa";
 
 const validSectionPaths = new Set(['home', ...data.navigationLinks.map((link) => link.href.replace(/^\//, ''))])
 
@@ -55,6 +54,11 @@ function App() {
     scrollToSection(normalizedPath, 'smooth')
   }
 
+  const handleBackToTop = () => {
+    window.history.pushState({}, '', '/home')
+    scrollToSection('/home', 'smooth')
+  }
+
   useEffect(() => {
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY
@@ -99,13 +103,28 @@ function App() {
           onHeroVisibilityChange={setHeroNameVisible}
           onNavigateSection={handleSectionNavigation}
         />
-        <Experience experience={data.experience} />
+        <AboutSection
+          profile={data.profile}
+          education={data.education}
+          experience={data.experience}
+          certifications={data.certifications}
+        />
         <Projects projects={data.projects} />
         <Skills skills={data.skills} interests={data.interests} />
-        <Education education={data.education} />
-        <Certifications certifications={data.certifications} />
         <Contact profile={data.profile} />
       </div>
+
+      {scrollProgress > 0.08 && (
+        <button
+          type="button"
+          onClick={handleBackToTop}
+          className="btn btn-circle btn-primary fixed bottom-5 right-5 z-50 border-none shadow-2xl shadow-black/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+          aria-label="Back to top"
+          title="Back to top"
+        >
+          <FaArrowUp className="text-lg leading-none" />
+        </button>
+      )}
     </main>
   )
 }
