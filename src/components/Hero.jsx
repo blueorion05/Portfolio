@@ -82,7 +82,7 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
               </div>
 
               <div className="hero-actions flex flex-wrap justify-center gap-3 lg:justify-start">
-                <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="btn btn-primary rounded-full border-0 bg-sky-500 px-6 text-white shadow-lg shadow-sky-500/20 hover:bg-sky-400">
+                <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="btn bg-pink-700 rounded-full border-0 px-6 text-white shadow-lg shadow-pink-400/20 hover:bg-pink-300">
                   View Projects
                 </a>
                 <a href="/contact" onClick={(event) => handleSectionClick(event, '/contact')} className="btn rounded-full border-white/15 bg-white/5 px-6 text-white hover:border-white/25 hover:bg-white/10">

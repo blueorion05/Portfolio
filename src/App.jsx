@@ -9,6 +9,7 @@ import data from './data'
 import { FaArrowUp } from "react-icons/fa";
 
 const validSectionPaths = new Set(['home', ...data.navigationLinks.map((link) => link.href.replace(/^\//, ''))])
+const sectionOrder = ['home', ...data.navigationLinks.map((link) => link.href.replace(/^\//, ''))]
 
 const getSectionIdFromPath = (pathname) => {
   const normalizedPath = pathname.replace(/\/+$/, '')
@@ -21,6 +22,7 @@ const getSectionIdFromPath = (pathname) => {
 function App() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [heroNameVisible, setHeroNameVisible] = useState(true)
+  const [activeSection, setActiveSection] = useState('home')
 
   const scrollToSection = (pathname, behavior = 'auto') => {
     const sectionId = getSectionIdFromPath(pathname)
@@ -50,6 +52,7 @@ function App() {
 
     event.preventDefault()
     const normalizedPath = normalizePath(pathname)
+    setActiveSection(getSectionIdFromPath(normalizedPath))
     window.history.pushState({}, '', normalizedPath)
     scrollToSection(normalizedPath, 'smooth')
   }
@@ -60,22 +63,39 @@ function App() {
   }
 
   useEffect(() => {
-    const updateScrollProgress = () => {
+    const updateScrollState = () => {
       const scrollTop = window.scrollY
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight
       setScrollProgress(maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0)
+
+      const activeLine = window.innerHeight * 0.35
+      let nextActiveSection = 'home'
+
+      for (const sectionId of sectionOrder) {
+        const sectionElement = document.getElementById(sectionId)
+
+        if (!sectionElement) continue
+
+        if (sectionElement.getBoundingClientRect().top <= activeLine) {
+          nextActiveSection = sectionId
+        }
+      }
+
+      setActiveSection(nextActiveSection)
     }
 
-    updateScrollProgress()
-    window.addEventListener('scroll', updateScrollProgress, { passive: true })
+    updateScrollState()
+    window.addEventListener('scroll', updateScrollState, { passive: true })
 
     const syncInitialLocation = () => {
       window.history.replaceState({}, '', '/home')
+      setActiveSection('home')
       scrollToSection('/home')
     }
 
     const syncSectionFromLocation = () => {
       const normalizedPath = normalizePath(window.location.pathname)
+      setActiveSection(getSectionIdFromPath(normalizedPath))
       scrollToSection(normalizedPath)
     }
 
@@ -83,7 +103,7 @@ function App() {
     window.addEventListener('popstate', syncSectionFromLocation)
 
     return () => {
-      window.removeEventListener('scroll', updateScrollProgress)
+      window.removeEventListener('scroll', updateScrollState)
       window.removeEventListener('popstate', syncSectionFromLocation)
     }
   }, [])
@@ -94,6 +114,7 @@ function App() {
         navigationLinks={data.navigationLinks}
         heroNameVisible={heroNameVisible}
         scrollProgress={scrollProgress}
+        activeSection={activeSection}
         onNavigateSection={handleSectionNavigation}
       />
 
@@ -118,7 +139,7 @@ function App() {
         <button
           type="button"
           onClick={handleBackToTop}
-          className="btn btn-circle btn-primary fixed bottom-5 right-5 z-50 border-none shadow-2xl shadow-black/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+          className="btn btn-circle bg-pink-700 fixed bottom-5 right-5 z-50 border-none shadow-2xl shadow-black/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
           aria-label="Back to top"
           title="Back to top"
         >
