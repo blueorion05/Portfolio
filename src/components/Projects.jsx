@@ -65,7 +65,7 @@ export default function Projects({ projects = [] }) {
         <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Projects</p>
         <h2 className="text-3xl font-black tracking-tight sm:text-4xl">Selected work</h2>
       </div>
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 md:grid-cols-2">
         {projects.map((project, index) => (
           <article
             key={`${project.title}-${viewCycle}`}
