@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import cSharpLogo from '../assets/skills/c-sharp.png'
 import javaLogo from '../assets/skills/java.png'
 import pythonLogo from '../assets/skills/python.png'
@@ -167,49 +168,63 @@ export default function Skills({ skills = [] }) {
 
   return (
     <section id="tech" className="mx-auto max-w-6xl space-y-10 border-b border-base-300/30 px-4 py-20 sm:px-6 lg:px-10">
-      <div className="mb-8 max-w-3xl">
-        <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Tech Stack</p>
-        <h2 className="text-3xl font-black tracking-tight sm:text-4xl">Technical strengths and personal interests</h2>
-        <p className="mt-3 max-w-2xl text-sm text-base-content/70 sm:text-base">
-          A list of technologies and tools I've worked with.
-        </p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="mb-8 max-w-3xl">
+          <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Tech Stack</p>
+          <h2 className="text-3xl font-black tracking-tight sm:text-4xl">Technical strengths and personal interests</h2>
+          <p className="mt-3 max-w-2xl text-sm text-base-content/70 sm:text-base">
+            A list of technologies and tools I've worked with.
+          </p>
+        </div>
+      </motion.div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         {visibleSkillGroups.map((group) => (
-          <article key={group.title} className="rounded-[2rem] border border-base-300/40 bg-base-200/70 p-5 shadow-xl shadow-black/10 backdrop-blur-sm sm:p-6">
-            <div className="mb-4 flex items-start justify-between gap-4">
-              <div>
-                <p className="badge badge-outline mb-2 uppercase tracking-[0.3em]">{group.title}</p>
-                <h3 className="text-xl font-bold tracking-tight text-base-content sm:text-2xl">{group.title}</h3>
-                <p className="mt-2 max-w-xl text-sm text-base-content/70">{group.description}</p>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <article key={group.title} className="rounded-[2rem] border border-base-300/40 bg-base-200/70 p-5 shadow-xl shadow-black/10 backdrop-blur-sm sm:p-6">
+              <div className="mb-4 flex items-start justify-between gap-4">
+                <div>
+                  <p className="badge badge-outline mb-2 uppercase tracking-[0.3em]">{group.title}</p>
+                  <h3 className="text-xl font-bold tracking-tight text-base-content sm:text-2xl">{group.title}</h3>
+                  <p className="mt-2 max-w-xl text-sm text-base-content/70">{group.description}</p>
+                </div>
+                <span className="rounded-full border border-base-300/50 bg-base-100/70 px-3 py-1 text-xs font-semibold tracking-[0.2em] text-base-content/70">
+                  {group.skills.length}
+                </span>
               </div>
-              <span className="rounded-full border border-base-300/50 bg-base-100/70 px-3 py-1 text-xs font-semibold tracking-[0.2em] text-base-content/70">
-                {group.skills.length}
-              </span>
-            </div>
 
-            <div className="flex flex-wrap gap-3">
-              {group.skills.map((skill) => {
-                const visual = getSkillVisual(skill)
+              <div className="flex flex-wrap gap-3">
+                {group.skills.map((skill) => {
+                  const visual = getSkillVisual(skill)
 
-                return (
-                  <div
-                    key={skill}
-                    className="inline-flex items-center gap-3 rounded-full border border-base-300/50 bg-base-100/75 px-4 py-3 text-base-content/90 shadow-lg shadow-black/10"
-                  >
-                    <img
-                      className="h-8 w-8 flex-none rounded-full bg-base-100/80 object-contain p-1 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
-                      src={visual.src}
-                      alt={visual.alt}
-                      loading="lazy"
-                    />
-                    <span className="whitespace-nowrap text-sm font-medium sm:text-base">{skill}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </article>
+                  return (
+                    <div
+                      key={skill}
+                      className="inline-flex items-center gap-3 rounded-full border border-base-300/50 bg-base-100/75 px-4 py-3 text-base-content/90 shadow-lg shadow-black/10"
+                    >
+                      <img
+                        className="h-8 w-8 flex-none rounded-full bg-base-100/80 object-contain p-1 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                        src={visual.src}
+                        alt={visual.alt}
+                        loading="lazy"
+                      />
+                      <span className="whitespace-nowrap text-sm font-medium sm:text-base">{skill}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </article>
+          </motion.div>
         ))}
       </div>
     </section>
