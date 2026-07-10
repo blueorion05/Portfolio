@@ -44,6 +44,8 @@ export const projects = [
     title: 'HYT Global Landing Page',
     category: 'Web Application',
     stack: 'React, Vite, Tailwind CSS, Firebase',
+    siteUrl: 'https://hyt-global-institute-inc.web.app/',
+    repoUrl: 'https://github.com/blueorion05/hyt-global-landing-page',
     description:
       'Developed a comprehensive single-page landing website showcasing HYT Global Institute’s professional training programs, course offerings, and facilities.',
     details: [
@@ -52,9 +54,11 @@ export const projects = [
     ],
   },
   {
-    title: 'bookMe',
+    title: 'ConnectMe',
     category: 'Web Application',
     stack: 'JavaScript, React, Vite',
+    siteUrl: 'https://connectme-e783f.web.app/',
+    repoUrl: 'https://github.com/blueorion05/ConnectMe',
     description:
       'Built a responsive booking and appointment management system with real-time scheduling capabilities and form validation.',
     details: [
@@ -66,6 +70,8 @@ export const projects = [
     title: 'HYTech Learning Management System',
     category: 'Web Application',
     stack: 'React, JSX, Firebase, Tailwind CSS',
+    siteUrl: 'https://hytech-ad360.web.app/',
+    repoUrl: 'https://github.com/blueorion05/HYTechLMS',
     description:
       'Developed a comprehensive Learning Management System with role-based access control for Admin, Trainer, Student, and Supervisor users with granular permission management.',
     details: [
@@ -77,6 +83,8 @@ export const projects = [
     title: 'Smart Grade',
     category: 'Web Application',
     stack: 'JavaScript, JSX',
+    siteUrl: 'https://svihs.vldzgroup.com/',
+    repoUrl: 'https://github.com/blueorion05/HYTechLMS',
     description: 'Developed a centralized system to manage students’ personal and academic records.',
     details: [
       'Integrated predictive capability to analyze academic performance and flag students at risk of academic failure.',
@@ -87,6 +95,7 @@ export const projects = [
     title: 'SemaREC',
     category: 'Web Application',
     stack: 'HTML, CSS, JavaScript, Python',
+    repoUrl: 'https://github.com/AHG-BSCS/SemaREC',
     description:
       'Built a web tool that translates semaphore flag positions into individual letters (A-Z).',
     details: [
@@ -97,6 +106,7 @@ export const projects = [
     title: 'Obby But You’re Sonic',
     category: 'Roblox Game',
     stack: 'Lua, Roblox Studio',
+    siteUrl: 'https://www.roblox.com/games/15968247773/Obby-But-You-re-Sonic',
     description:
       'Designed and developed a 3D obstacle course game on Roblox with Sonic-themed mechanics.',
     details: [
@@ -108,6 +118,7 @@ export const projects = [
     title: 'LocalLoan',
     category: 'Android Application',
     stack: 'Java, Android Studio',
+    repoUrl: 'https://github.com/AHG-BSCS/LocalLoan',
     description:
       'Developed an Android application to provide microfinance assistance and improve financial literacy.',
     details: [
@@ -119,6 +130,7 @@ export const projects = [
     title: 'ProductEase',
     category: 'WinForms Desktop Application',
     stack: 'C#',
+    repoUrl: 'https://github.com/blueorion05/ProductEase',
     description:
       'Developed a Point of Sale desktop application to manage product inventory, sales transactions, and customer receipts.',
     details: ['Built core features including product registration, price updates, billing, and transaction tracking.'],
