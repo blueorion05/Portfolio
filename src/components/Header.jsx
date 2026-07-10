@@ -25,7 +25,7 @@ export default function Header({ navigationLinks = [], heroNameVisible, scrollPr
           <a
             href="/home"
             onClick={(event) => handleSectionClick(event, "/home")}
-            className={`relative overflow-hidden btn bg-pink-700 btn-sm rounded-full px-5 font-black tracking-wide shadow-lg transition-all duration-500 sm:btn-md ${
+            className={`relative overflow-hidden btn bg-pink-700 btn-sm rounded-full px-5 font-black tracking-wide shadow-lg transition-all duration-500 sm:btn-md transition-all duration-500 ease-out hover:bg-pink-800 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 ${
               !heroNameVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-full pointer-events-none"

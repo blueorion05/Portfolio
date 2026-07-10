@@ -126,12 +126,12 @@ export default function Contact({ profile }) {
                 <div className="rounded-2xl border border-base-300/50 bg-gradient-to-br from-base-100 to-base-200 p-5 shadow-lg shadow-black/10">
                   <p className="text-sm font-semibold uppercase tracking-[0.3em]">Quick Links</p>
                   <div className="mt-4 flex flex-wrap gap-3">
-                    <a href={`mailto:${profile.email}`} className="btn bg-pink-700 rounded-full">
+                    <a href={`mailto:${profile.email}`} className="btn bg-pink-700 rounded-full transition-all duration-500 ease-out hover:bg-pink-800 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
                       Email Me
                     </a>
                     <a
                       href={`tel:${profile.phone}`}
-                      className="btn btn-outline rounded-full border-base-content/20 text-base-content hover:bg-base-content/10"
+                      className="btn btn-outline rounded-full border-base-content/20 text-base-content transition-all duration-500 ease-out hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
                     >
                       Call Me
                     </a>
@@ -185,7 +185,7 @@ export default function Contact({ profile }) {
                     />
                   </div>
 
-                  <button type="submit" className="btn bg-pink-700 w-full rounded-full text-base" disabled={submitState === 'sending'}>
+                  <button type="submit" className="btn bg-pink-700 w-full rounded-full text-base transition-all duration-500 ease-out hover:bg-pink-800 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0" disabled={submitState === 'sending'}>
                     {submitState === 'sending' ? 'Sending...' : 'Send Message'}
                   </button>
 

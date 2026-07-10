@@ -59,10 +59,10 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
               </div>
 
               <div className="hero-actions flex flex-wrap justify-center gap-3 lg:justify-start">
-                <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="btn bg-pink-700 rounded-full border-0 px-6 text-white shadow-lg shadow-pink-400/20 hover:bg-pink-300">
+                <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="btn bg-pink-700 rounded-full transition-all duration-500 ease-out hover:bg-pink-800 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
                   View Projects
                 </a>
-                <a href="/contact" onClick={(event) => handleSectionClick(event, '/contact')} className="btn rounded-full border-white/15 bg-white/5 px-6 text-white hover:border-white/25 hover:bg-white/10">
+                <a href="/contact" onClick={(event) => handleSectionClick(event, '/contact')} className="btn rounded-full border-white/15 bg-white/5 px-6 text-white transition-all duration-500 ease-out hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
                   Contact Me
                 </a>
               </div>
@@ -70,7 +70,7 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
 
             <div key={`hero-portrait-${heroAnimationSeed}`} className="hero-portrait relative mx-auto w-full max-w-[24rem] lg:max-w-[80%] lg:justify-self-end">
               <div className="absolute inset-x-8 top-8 h-[70%] rounded-full bg-gradient-to-b from-sky-400/20 via-violet-500/10 to-transparent blur-3xl" />
-              <div className="relative overflow-hidden rounded-full border border-white/10 bg-white/5 p-3 shadow-2xl shadow-sky-950/40">
+              <div className="relative overflow-hidden rounded-full border border-white/10 bg-white/5 p-3 shadow-2xl shadow-pink-950/80">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-full bg-slate-900">
                   <img src={profilePic} alt={`${profile.name} portrait`} className="h-full w-full object-cover object-[center_80%]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent" />

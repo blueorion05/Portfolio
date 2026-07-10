@@ -66,7 +66,7 @@ export default function Projects({ projects = [] }) {
                       href={project.siteUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="btn bg-pink-700 btn-sm sm:btn-md"
+                      className="btn bg-pink-700 btn-sm sm:btn-md transition-all duration-500 ease-out hover:bg-pink-800 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
                     >
                       Launch
                     </a>
@@ -76,7 +76,7 @@ export default function Projects({ projects = [] }) {
                       href={project.repoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="btn btn-outline btn-sm sm:btn-md bg-base-100/90 backdrop-blur"
+                      className="btn btn-outline btn-sm sm:btn-md bg-base-100/90 backdrop-blur transition-all duration-500 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
                     >
                       Repository
                     </a>
