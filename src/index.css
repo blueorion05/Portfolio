@@ -227,3 +227,25 @@ body {
     filter: none !important;
   }
 }
+
+.chat-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(236,72,153,.5) transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(236,72,153,.5);
+  border-radius: 999px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(236 72 153);
+}

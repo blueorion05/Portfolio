@@ -5,6 +5,7 @@ import AboutSection from './components/AboutSection'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
+import Chatbot from './components/Chatbot'
 import data from './data'
 import { FaArrowUp } from "react-icons/fa";
 
@@ -141,6 +142,14 @@ function App() {
           Built with <span aria-hidden="true">React + Javascript + Vite + Tailwind CSS + DaisyUI</span>
         </p>
       </footer>
+
+      <Chatbot
+        profile={data.profile}
+        skills={data.skills}
+        projects={data.projects}
+        experience={data.experience}
+        education={data.education}
+      />
 
       {scrollProgress > 0.08 && (
         <button
