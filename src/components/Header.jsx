@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 const getSectionIdFromPath = (pathname) => pathname.replace(/^\/+|\/+$/g, '') || 'home'
 
@@ -23,9 +24,28 @@ export default function Header({ navigationLinks = [], heroNameVisible, scrollPr
         <div className="flex items-center justify-between gap-3 lg:justify-start">
           <a
             href="/home"
-            onClick={(event) => handleSectionClick(event, '/home')}
-            className={`btn bg-pink-700 btn-sm rounded-full px-5 font-black tracking-wide shadow-lg transition-all duration-500 sm:btn-md ${!heroNameVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
-            Gerald Jhudiel D. Atienza
+            onClick={(event) => handleSectionClick(event, "/home")}
+            className={`relative overflow-hidden btn bg-pink-700 btn-sm rounded-full px-5 font-black tracking-wide shadow-lg transition-all duration-500 sm:btn-md ${
+              !heroNameVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 -translate-y-full pointer-events-none"
+            }`}
+          >
+            <motion.span
+              className="pointer-events-none absolute inset-y-0 w-12 bg-gradient-to-r from-transparent via-white/60 to-transparent"
+              initial={{ x: "-300%" }}
+              animate={{ x: "300%" }}
+              transition={{
+                duration: 0.8,
+                repeat: Infinity,
+                repeatDelay: 2.2,
+                ease: "easeInOut",
+              }}
+            />
+
+            <span className="relative z-10">
+              Gerald Jhudiel D. Atienza
+            </span>
           </a>
 
           <button
