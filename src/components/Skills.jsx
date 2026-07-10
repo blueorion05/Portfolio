@@ -183,7 +183,7 @@ export default function Skills({ skills = [] }) {
         </div>
       </motion.div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-1">
         {visibleSkillGroups.map((group) => (
           <motion.div
             initial={{ opacity: 0, y: 40 }}
