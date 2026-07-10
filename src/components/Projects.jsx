@@ -43,6 +43,7 @@ export default function Projects({ projects = [] }) {
       <div className="grid gap-5 md:grid-cols-2">
         {projects.map((project, index) => (
           <motion.div
+            key={project.title}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

@@ -12,12 +12,6 @@ const getSuggestedReplies = (profile, skills, projects, experience, education) =
   const topProjects = projects.slice(0, 3).map((project) => project.title)
   const latestExperience = experience[0]
   const latestEducation = education[0]
-  const [rotation, setRotation] = useState(0);
-
-const toggleChat = () => {
-setRotation((r) => r + 360);
-setIsOpen((o) => !o);
-};
 
   return [
     {
@@ -260,6 +254,7 @@ function Chatbot({ profile, skills, projects, experience, education }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+            key="chat-overlay"
             className="fixed inset-0 z-[999]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

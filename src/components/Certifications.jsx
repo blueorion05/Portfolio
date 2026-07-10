@@ -62,6 +62,7 @@ export default function Certifications({ certifications = [] }) {
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {certificationItems.map((item) => (
           <motion.div
+            key={item.title}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
