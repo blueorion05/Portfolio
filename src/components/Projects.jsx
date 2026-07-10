@@ -57,7 +57,7 @@ export default function Projects({ projects = [] }) {
                 <img
                   src={getProjectImage(project.title)}
                   alt={`${project.title} preview`}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  className="h-full w-full object-fill transition duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-slate-950/0 transition duration-300 group-hover:bg-slate-950/45" />
                 <div className="absolute inset-0 flex items-center justify-center gap-3 p-4 opacity-0 transition duration-300 group-hover:opacity-100">
