@@ -18,7 +18,7 @@ export default function Header({ navigationLinks = [], heroNameVisible, scrollPr
   }
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 lg:border-b lg:border-base-300/40 lg:bg-base-100/80 lg:backdrop-blur-xl ${!heroNameVisible || menuOpen ? 'border-b border-base-300/40 bg-base-100/80 backdrop-blur-xl' : 'bg-transparent backdrop-blur-none'}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 lg:border-b lg:border-pink-700/40 lg:bg-slate-950/80 lg:backdrop-blur-xl ${!heroNameVisible || menuOpen ? 'border-b border-base-300/40 bg-base-100/80 backdrop-blur-xl' : 'bg-transparent backdrop-blur-none'}`}>
       <div className="relative flex w-full flex-col gap-4 px-4 py-4 sm:px-6 lg:px-10 lg:flex-row lg:items-center lg:justify-center lg:gap-150">
         <div className="flex items-center justify-between gap-3 lg:justify-start">
           <a
@@ -61,11 +61,23 @@ export default function Header({ navigationLinks = [], heroNameVisible, scrollPr
               href={link.href}
               onClick={(event) => handleSectionClick(event, link.href)}
               aria-current={isActive ? 'page' : undefined}
-              className={`group relative btn btn-ghost btn-md overflow-hidden px-4 transition-colors duration-300 hover:bg-base-200/80 ${isActive ? 'text-pink-400' : 'text-base-content/75 hover:text-pink-300'}`}>
+              className={`group relative btn btn-ghost
+                !bg-transparent
+                !border-transparent
+                !shadow-none
+                hover:!bg-transparent
+                hover:!border-transparent
+                active:!bg-transparent
+                focus:!bg-transparent
+                overflow-hidden px-4 duration-300 ${
+                  isActive
+                    ? 'text-pink-400'
+                    : 'text-base-content/75 hover:text-pink-400'
+                }`}>
               <span className="relative z-10">{link.label}</span>
               <span
                 aria-hidden="true"
-                className={`pointer-events-none absolute inset-x-4 bottom-2 h-0.5 origin-left rounded-full bg-pink-700 transition-transform duration-300 ease-out ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}
+                className={`pointer-events-none absolute inset-x-4 bottom-2 h-0.5 origin-left rounded-full bg-pink-700 transition-transform duration-300 ease-out ${isActive ? 'scale-x-100' : 'scale-x-0'}`}
               />
             </a>
               )

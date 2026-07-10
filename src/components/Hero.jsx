@@ -25,23 +25,6 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
     return () => observer.disconnect()
   }, [onHeroVisibilityChange])
 
-  const handlePointerMove = (event) => {
-    const shell = shellRef.current
-    if (!shell) return
-    const rect = shell.getBoundingClientRect()
-    const x = ((event.clientX - rect.left) / rect.width) * 100
-    const y = ((event.clientY - rect.top) / rect.height) * 100
-    setHeroGlow({ x, y })
-  }
-
-  const heroStyle = {
-    backgroundImage:
-      `radial-gradient(circle at ${heroGlow.x}% ${heroGlow.y}%, rgba(56, 189, 248, 0.18), transparent 22%), ` +
-      'radial-gradient(circle at 20% 18%, rgba(251, 191, 36, 0.14), transparent 26%), ' +
-      'radial-gradient(circle at 78% 10%, rgba(168, 85, 247, 0.14), transparent 24%), ' +
-      'linear-gradient(135deg, rgba(6, 10, 18, 0.96), rgba(11, 18, 32, 0.94) 52%, rgba(8, 14, 25, 0.98))',
-  }
-
   const handleSectionClick = (event, href) => {
     if (onNavigateSection) {
       onNavigateSection(event, href)
@@ -49,19 +32,13 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
   }
 
   return (
-    <section id="home" className="mx-auto max-w-6xl space-y-10 overflow-hidden border-b border-base-300/20 py-4 lg:py-19">
+    <section id="home" className="mx-auto max-w-6xl space-y-10 overflow-hidden py-4 lg:py-28">
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-10">
         <div
-          className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/80 px-6 py-8 shadow-[0_32px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-8 sm:py-10 lg:px-12 lg:py-12"
-          style={heroStyle}
+          className="relative overflow-hidden px-6 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12"
           ref={shellRef}
-          onPointerMove={handlePointerMove}
           data-hero-active={heroIsActive}
         >
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:42px_42px] opacity-20" />
-          <div className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-sky-400/12 blur-3xl" />
-          <div className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl" />
-
           <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:gap-8">
             <div key={`hero-copy-${heroAnimationSeed}`} className="hero-copy max-w-3xl space-y-6 text-center lg:text-left">
               <div className="hero-copy__item flex flex-wrap justify-center gap-3 lg:justify-start">
@@ -75,7 +52,7 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
 
               <div className="hero-copy__item space-y-4">
                 <p className="text-sm uppercase tracking-[0.4em] text-base-content/45">Portfolio overview</p>
-                <h1 className="text-balance text-5xl font-black leading-[0.92] tracking-tight text-white sm:text-6xl lg:text-[5.2rem]">{profile.name}</h1>
+                <h1 className="text-balance text-5xl font-black leading-[1] tracking-tight text-white sm:text-6xl lg:text-[5rem]">{profile.name}</h1>
                 <p className="max-w-2xl text-pretty text-base leading-8 text-slate-200/78 sm:text-lg">
                   I build practical systems across web, mobile, and desktop with a focus on intelligent systems, clear user experiences, and useful real-world outcomes.
                 </p>

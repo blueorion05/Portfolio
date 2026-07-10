@@ -109,7 +109,7 @@ function App() {
   }, [])
 
   return (
-    <main data-theme="night" className="min-h-screen w-full overflow-x-hidden bg-base-100 text-base-content">
+    <main data-theme="night" className="min-h-screen w-full overflow-x-hidden bg-slate-950/80 text-base-content">
       <Header
         navigationLinks={data.navigationLinks}
         heroNameVisible={heroNameVisible}
