@@ -91,7 +91,7 @@ export default function Contact({ profile }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
         <div className="card overflow-hidden border border-base-300/40 bg-base-200/70 shadow-2xl backdrop-blur-xl">
           <div className="card-body gap-8 p-6 sm:p-8 lg:p-10">
@@ -142,7 +142,7 @@ export default function Contact({ profile }) {
               <div className="rounded-3xl border border-base-300/50 bg-base-100/80 p-5 shadow-2xl shadow-black/10 sm:p-6">
                 <h3 className="text-2xl font-bold text-base-content">Send a message</h3>
                 <p className="mt-2 text-sm text-base-content/70">
-                  Share your project details, questions, or collaboration ideas and I’ll get back to you.
+                  Share your message, questions, or collaboration ideas and I’ll get back to you.
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -181,7 +181,7 @@ export default function Contact({ profile }) {
                       required
                       rows={5}
                       className="textarea textarea-bordered w-full border-base-300/60 bg-base-200/70 focus:border-primary focus:outline-none"
-                      placeholder="Tell me about your project..."
+                      placeholder="Tell me your message..."
                     />
                   </div>
 

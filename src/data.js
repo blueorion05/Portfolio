@@ -1,10 +1,10 @@
 export const profile = {
   name: 'Gerald Jhudiel D. Atienza',
-  address: 'Brgy. Santa Monica, San Pablo City, Laguna, Philippines 4000',
-  email: 'jhudielatienza2k20@gmail.com',
+  address: 'San Pablo City, Laguna, Philippines',
+  email: 'atienzageraldjhudiel@gmail.com',
   phone: '09614941414',
-  role: 'Computer Science Graduate Specialized in Intelligent Systems',
-  thesis: 'Smart Grade',
+  role: 'Computer Science Graduate | Software Engineer',
+  thesis: 'Smart Grade: A Student Information System and Risk Prediction System',
 }
 
 export const education = [
@@ -43,7 +43,7 @@ export const projects = [
   {
     title: 'HYT Global Landing Page',
     category: 'Web Application',
-    stack: 'React, Vite, Tailwind CSS, Firebase',
+    stack: 'React, Vite, Javascript, Firebase',
     siteUrl: 'https://hyt-global-institute-inc.web.app/',
     repoUrl: 'https://github.com/blueorion05/hyt-global-landing-page',
     description:
@@ -56,7 +56,7 @@ export const projects = [
   {
     title: 'ConnectMe',
     category: 'Web Application',
-    stack: 'JavaScript, React, Vite',
+    stack: 'React, Vite, Javascript, Firebase',
     siteUrl: 'https://connectme-e783f.web.app/',
     repoUrl: 'https://github.com/blueorion05/ConnectMe',
     description:
@@ -69,7 +69,7 @@ export const projects = [
   {
     title: 'HYTech Learning Management System',
     category: 'Web Application',
-    stack: 'React, JSX, Firebase, Tailwind CSS',
+    stack: 'React, Vite, Javascript, Firebase',
     siteUrl: 'https://hytech-ad360.web.app/',
     repoUrl: 'https://github.com/blueorion05/HYTechLMS',
     description:
@@ -82,9 +82,9 @@ export const projects = [
   {
     title: 'Smart Grade',
     category: 'Web Application',
-    stack: 'JavaScript, JSX',
-    siteUrl: 'https://svihs.vldzgroup.com/',
-    repoUrl: 'https://github.com/blueorion05/HYTechLMS',
+    stack: 'React, Vite, Javascript, Python, Firebase',
+    siteUrl: 'https://dev.hitech.vldzgroup.com/',
+    repoUrl: 'https://github.com/AHG-BSCS/project-hitech',
     description: 'Developed a centralized system to manage students’ personal and academic records.',
     details: [
       'Integrated predictive capability to analyze academic performance and flag students at risk of academic failure.',
@@ -129,7 +129,7 @@ export const projects = [
   {
     title: 'ProductEase',
     category: 'WinForms Desktop Application',
-    stack: 'C#',
+    stack: 'C#, .NET Framework, WinForms',
     repoUrl: 'https://github.com/blueorion05/ProductEase',
     description:
       'Developed a Point of Sale desktop application to manage product inventory, sales transactions, and customer receipts.',

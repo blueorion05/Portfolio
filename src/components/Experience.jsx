@@ -37,7 +37,7 @@ export default function Experience({ experience = [] }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
         <div className="mb-8">
           <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Experience</p>
@@ -48,7 +48,7 @@ export default function Experience({ experience = [] }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
         <div className="grid gap-6 overflow-hidden rounded-3xl border border-base-300/40 bg-base-200/65 shadow-xl backdrop-blur-sm lg:grid-cols-[1.05fr_0.95fr]">
           <div className="p-6 sm:p-8">

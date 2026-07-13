@@ -11,15 +11,14 @@ export default function AboutSection({ profile, education = [], experience = [],
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 1 }}
         >
           <div className="grid gap-8 rounded-[2rem] border border-base-300/40 bg-base-200/70 p-6 shadow-xl backdrop-blur-sm sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:p-10">
             <div className="space-y-4">
               <p className="badge badge-outline uppercase tracking-[0.35em]">About Me</p>
               <h2 className="text-3xl font-black tracking-tight sm:text-4xl">{profile.name}</h2>
               <p className="max-w-3xl text-base leading-8 text-base-content/75 sm:text-lg">
-                I am a computer science graduate specialized in intelligent systems, focused on building practical solutions across web, mobile, and desktop development.
-                My work blends clean interfaces, useful functionality, and problem-solving that supports real-world outcomes.
+                I'm a Software Engineer and a Computer Science graduate specializing in Intelligent Systems. I build full-stack web applications, intelligent systems, and machine learning solutions that address real-world challenges. From designing intuitive user interfaces to developing scalable back-end systems and deploying production-ready applications, I'm passionate about creating software that delivers meaningful impact and continuously expanding my expertise as a developer.
               </p>
             </div>
 

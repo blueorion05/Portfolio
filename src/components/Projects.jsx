@@ -6,7 +6,7 @@ import hytech from '../assets/projects/hytech.png'
 import smartgrade from '../assets/projects/smartgrade.png'
 import semarec from '../assets/projects/semarec.png'
 import obbybutyouresonic from '../assets/projects/obbybutyouresonic.png'
-import localloan from '../assets/projects/localloan.jpg'
+import localloan from '../assets/projects/localloan.png'
 import productease from '../assets/projects/productease.png'
 
 const getConciseDescription = (description) => description.split(/(?<=\.)\s+/)[0] || description
@@ -33,7 +33,7 @@ export default function Projects({ projects = [] }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
         <div className="mb-8">
           <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Projects</p>
@@ -47,14 +47,14 @@ export default function Projects({ projects = [] }) {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1 }}
           >
             <article
               key={`${project.title}`}
               className="project-card group overflow-hidden rounded-3xl border border-base-300/40 bg-base-200/65 shadow-xl backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-2xl"
               style={{ '--reveal-delay': `${index * 140}ms` }}
             >
-              <figure className="relative aspect-[16/10] overflow-hidden border-b border-base-300/30">
+              <figure className="relative aspect-[16/8] overflow-hidden border-b border-base-300/30">
                 <img
                   src={getProjectImage(project.title)}
                   alt={`${project.title} preview`}

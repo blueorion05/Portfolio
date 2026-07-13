@@ -21,7 +21,7 @@ export default function Education({ education = [] }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
         <div className="mb-8 max-w-3xl space-y-3">
           <p className="badge badge-outline uppercase tracking-[0.35em]">Education</p>
@@ -36,7 +36,7 @@ export default function Education({ education = [] }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
         <div className="grid items-stretch gap-5 md:grid-cols-2 xl:gap-6">
           {education.map((item) => {

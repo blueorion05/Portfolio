@@ -47,7 +47,7 @@ export default function Certifications({ certifications = [] }) {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 1 }}
         >
           <div className="max-w-2xl space-y-3">
             <p className="badge badge-outline uppercase tracking-[0.35em]">Certifications</p>
@@ -66,7 +66,7 @@ export default function Certifications({ certifications = [] }) {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1 }}
           >
             <article
               key={item.title}

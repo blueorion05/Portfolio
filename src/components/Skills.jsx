@@ -42,6 +42,11 @@ const skillVisuals = {
   'Visual Studio': { type: 'image', src: visualStudioLogo, alt: 'Visual Studio logo' },
   'Android Studio': { type: 'image', src: androidStudioLogo, alt: 'Android Studio logo' },
   'Roblox Studio': { type: 'image', src: robloxStudioLogo, alt: 'Roblox Studio logo' },
+  'Firebase Hosting': { type: 'image', src: firebaseLogo, alt: 'Firebase Hosting logo' },
+  'Figma': { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg', alt: 'Figma logo' },
+  'Netbeans': { type: 'image', src: 'https://cdn.iconscout.com/icon/free/png-256/free-netbeans-icon-svg-download-png-14549258.png?f=webp&w=128', alt: 'Netbeans logo' },
+  'PHP': { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg', alt: 'PHP logo' },
+  'SQL': { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png', alt: 'SQL logo' },
 }
 
 const skillFallbacks = {
@@ -77,27 +82,27 @@ const skillGroups = [
   {
     title: 'Programming Languages',
     description: 'Core languages used for software development and scripting.',
-    skills: ['C#', 'Java', 'Python', 'Lua', 'JavaScript'],
+    skills: ['C#', 'Java', 'Python', 'Lua', 'JavaScript', 'PHP', 'SQL'],
   },
   {
     title: 'Web & Frontend',
     description: 'Tools and technologies used to build responsive interfaces.',
-    skills: ['HTML', 'CSS', 'React', 'Vite', 'Tailwind CSS', 'daisyUI', 'UI/UX Design'],
+    skills: ['HTML', 'CSS', 'React', 'Vite', 'Tailwind CSS', 'daisyUI'],
   },
   {
-    title: 'Data & Backend',
+    title: 'Backend & Database',
     description: 'Services and databases used for app data and persistence.',
-    skills: ['Firebase', 'MySQL', 'SQLite'],
+    skills: ['Firebase', 'MySQL', 'SQLite', 'CRUD Operations', 'RESTful APIs'],
   },
   {
     title: 'Tools & Platforms',
     description: 'Development environments and collaboration tools.',
-    skills: ['Git', 'GitHub', 'Visual Studio Code', 'Visual Studio', 'Android Studio', 'Roblox Studio'],
+    skills: ['Git', 'GitHub', 'Firebase Hosting', 'Figma', 'Visual Studio Code', 'Visual Studio', 'Android Studio', 'Roblox Studio', 'Netbeans'],
   },
   {
-    title: 'Practices & Specializations',
+    title: 'Software Engineering',
     description: 'Supporting skills and technical disciplines applied across projects.',
-    skills: ['System Testing', 'Troubleshooting', 'Machine Learning', 'Computer Vision', 'Project Management'],
+    skills: ['Object-Oriented Programming (OOP)', 'Software Development Life Cycle (SDLC)', 'Agile Development', 'UI/UX Design', 'Testing & Debugging', 'Version Control', 'Role-Based Access Control (RBAC)'],
   },
 ]
 
@@ -172,7 +177,7 @@ export default function Skills({ skills = [] }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
         <div className="mb-8 max-w-3xl">
           <p className="badge badge-outline mb-3 uppercase tracking-[0.35em]">Tech Stack</p>
@@ -190,7 +195,7 @@ export default function Skills({ skills = [] }) {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1 }}
           >
             <article key={group.title} className="rounded-[2rem] border border-base-300/40 bg-base-200/70 p-5 shadow-xl shadow-black/10 backdrop-blur-sm sm:p-6">
               <div className="mb-4 flex items-start justify-between gap-4">
