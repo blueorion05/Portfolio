@@ -18,7 +18,7 @@ export default function AboutSection({ profile, education = [], experience = [],
               <p className="badge badge-outline uppercase tracking-[0.35em]">About Me</p>
               <h2 className="text-3xl font-black tracking-tight sm:text-4xl">{profile.name}</h2>
               <p className="max-w-3xl text-base leading-8 text-base-content/75 sm:text-lg">
-                I'm a Software Engineer and a Computer Science graduate specializing in Intelligent Systems. I build full-stack web applications, intelligent systems, and machine learning solutions that address real-world challenges. From designing intuitive user interfaces to developing scalable back-end systems and deploying production-ready applications, I'm passionate about creating software that delivers meaningful impact and continuously expanding my expertise as a developer.
+                I'm a Software Developer and a Computer Science graduate specializing in Intelligent Systems. I build full-stack web applications, intelligent systems, and machine learning solutions that address real-world challenges. From designing intuitive user interfaces to developing scalable back-end systems and deploying production-ready applications, I'm passionate about creating software that delivers meaningful impact and continuously expanding my expertise as a developer.
               </p>
             </div>
 

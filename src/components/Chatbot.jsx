@@ -260,7 +260,7 @@ Name:
 Gerald Jhudiel D. Atienza
 
 Role:
-Software Engineer
+Software Developer
 
 Location:
 San Pablo City, Laguna, Philippines

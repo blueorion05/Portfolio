@@ -3,7 +3,7 @@ export const profile = {
   address: 'San Pablo City, Laguna, Philippines',
   email: 'atienzageraldjhudiel@gmail.com',
   phone: '09614941414',
-  role: 'Computer Science Graduate | Software Engineer',
+  role: 'Software Developer',
   thesis: 'Smart Grade: A Student Information System and Risk Prediction System',
 }
 
