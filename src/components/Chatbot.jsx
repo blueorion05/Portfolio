@@ -327,6 +327,7 @@ Tailwind CSS
 DaisyUI
 
 Backend & Database:
+Flask
 Firebase Authentication
 Cloud Firestore
 MySQL

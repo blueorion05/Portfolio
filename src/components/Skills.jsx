@@ -47,6 +47,7 @@ const skillVisuals = {
   'Netbeans': { type: 'image', src: 'https://cdn.iconscout.com/icon/free/png-256/free-netbeans-icon-svg-download-png-14549258.png?f=webp&w=128', alt: 'Netbeans logo' },
   'PHP': { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg', alt: 'PHP logo' },
   'SQL': { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png', alt: 'SQL logo' },
+  'Flask': { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg', alt: 'Flask logo' },
 }
 
 const skillFallbacks = {
@@ -92,7 +93,7 @@ const skillGroups = [
   {
     title: 'Backend & Database',
     description: 'Services and databases used for app data and persistence.',
-    skills: ['Firebase', 'MySQL', 'SQLite', 'CRUD Operations', 'RESTful APIs'],
+    skills: ['Flask', 'Firebase', 'MySQL', 'SQLite', 'CRUD Operations', 'RESTful APIs'],
   },
   {
     title: 'Tools & Platforms',
