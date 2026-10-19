@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { motion as Motion } from 'motion/react'
 import profilePic from '../assets/profilepic.jpg'
 
 export default function Hero({ profile, onHeroVisibilityChange, onNavigateSection }) {
   const shellRef = useRef(null)
-  const [heroGlow, setHeroGlow] = useState({ x: 50, y: 35 })
   const [heroIsActive, setHeroIsActive] = useState(true)
   const [heroAnimationSeed, setHeroAnimationSeed] = useState(0)
 
@@ -32,54 +32,30 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
   }
 
   return (
-    <section id="home" className="mx-auto max-w-6xl space-y-10 overflow-hidden py-4 lg:py-28">
-      <div className="mx-auto w-full px-4 sm:px-6 lg:px-10">
-        <div
-          className="relative overflow-hidden px-6 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12"
-          ref={shellRef}
-          data-hero-active={heroIsActive}
-        >
-          <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:gap-8">
-            <div key={`hero-copy-${heroAnimationSeed}`} className="hero-copy max-w-3xl space-y-6 text-center lg:text-left">
-              <div className="hero-copy__item flex flex-wrap justify-center gap-3 lg:justify-start">
-                <span className="badge badge-outline badge-warning border-white/15 bg-white/5 px-4 py-3 uppercase tracking-[0.35em] text-[0.65rem] text-amber-200">
-                  Computer Science Graduate
-                </span>
-                <span className="badge badge-outline border-sky-400/30 bg-sky-400/10 px-4 py-3 text-sky-100">
-                  Intelligent Systems
-                </span>
-              </div>
+    <section id="home" className="hero-section" ref={shellRef} data-hero-active={heroIsActive}>
+      <div className="hero-grid">
+        <Motion.div key={`hero-copy-${heroAnimationSeed}`} className="hero-copy" initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: .07, delayChildren: .08 } } }}>
+          <Motion.p className="eyebrow hero-copy__item" variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: .28 }}><span className="status-dot" /> Developer profile</Motion.p>
+          <Motion.h1 className="hero-title hero-copy__item" variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: .38, ease: 'easeOut' }}>I build digital worlds with <em>intelligence.</em></Motion.h1>
+          <Motion.p className="hero-intro hero-copy__item" variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: .3 }}>I&apos;m {profile.name}, a Magna Cum Laude Computer Science graduate specializing in Intelligent Systems. I build practical web applications, interfaces, and tools that make complex ideas feel clear.</Motion.p>
+          <Motion.div className="hero-actions" variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: .28 }}>
+            <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="button button--accent">Explore experiences <span aria-hidden="true">↗</span></a>
+            <a href="/about" onClick={(event) => handleSectionClick(event, '/about')} className="text-link">View profile <span aria-hidden="true">↓</span></a>
+          </Motion.div>
+          <Motion.div className="hero-socials" aria-label="Social links" variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} transition={{ duration: .3 }}>
+            <a href="https://github.com/blueorion05" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+            <a href="https://www.linkedin.com/in/gerald-jhudiel-atienza/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+          </Motion.div>
+        </Motion.div>
 
-              <div className="hero-copy__item space-y-4">
-                <p className="text-sm uppercase tracking-[0.4em] text-base-content/45">Portfolio overview</p>
-                <h1 className="text-balance text-5xl font-black leading-[1] tracking-tight text-white sm:text-6xl lg:text-[5rem]">{profile.name}</h1>
-                <p className="max-w-2xl text-pretty text-base leading-8 text-slate-200/78 sm:text-lg">
-                  I build practical systems across web, mobile, and desktop with a focus on intelligent systems, clear user experiences, and useful real-world outcomes.
-                </p>
-              </div>
-
-              <div className="hero-actions flex flex-wrap justify-center gap-3 lg:justify-start">
-                <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="btn bg-pink-700 rounded-full transition-all duration-500 ease-out hover:bg-pink-800 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
-                  View Projects
-                </a>
-                <a href="/contact" onClick={(event) => handleSectionClick(event, '/contact')} className="btn rounded-full border-white/15 bg-white/5 px-6 text-white transition-all duration-500 ease-out hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
-                  Contact Me
-                </a>
-              </div>
-            </div>
-
-            <div key={`hero-portrait-${heroAnimationSeed}`} className="hero-portrait relative mx-auto w-full max-w-[24rem] lg:max-w-[80%] lg:justify-self-end">
-              <div className="absolute inset-x-8 top-8 h-[70%] rounded-full bg-gradient-to-b from-sky-400/20 via-violet-500/10 to-transparent blur-3xl" />
-              <div className="relative overflow-hidden rounded-full border border-white/10 bg-white/5 p-3 shadow-2xl shadow-pink-950/80">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-full bg-slate-900">
-                  <img src={profilePic} alt={`${profile.name} portrait`} className="h-full w-full object-cover object-[center_80%]" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,transparent_38%,rgba(59,130,246,0.16)_100%)]" />
-                </div>
-              </div>
-            </div>
+        <Motion.div key={`hero-portrait-${heroAnimationSeed}`} className="hero-visual hero-portrait" initial={{ opacity: 0, x: 18, scale: .98 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: .48, delay: .15, ease: 'easeOut' }}>
+          <div className="hero-visual__label">Selected signal <span>01 / 04</span></div>
+          <div className="hero-visual__frame">
+            <img src={profilePic} alt={`${profile.name} portrait`} />
+            <div className="hero-visual__caption"><span>Gerald Jhudiel D. Atienza</span><span>CS / Intelligent Systems</span></div>
           </div>
-        </div>
+          <div className="hero-visual__note">Designing at the intersection<br />of systems + people</div>
+        </Motion.div>
       </div>
     </section>
   )

@@ -1,7 +1,6 @@
 import React from 'react'
 import lspuLogo from '../assets/lspulogo.png'
 import sciHighLogo from '../assets/scihighlogo.png'
-import { motion } from 'framer-motion'
 
 const educationAssets = {
   'Laguna State Polytechnic University': {

@@ -1,5 +1,4 @@
 import React from 'react'
-import { motion } from 'framer-motion'
 import itSpecialistCybersecurity from '../assets/it-specialist-cybersecurity.png'
 import webDevelopmentFundamentals from '../assets/web-development-fundamentals.png'
 import javascriptEssentials2 from '../assets/javascript-essentials-2.png'

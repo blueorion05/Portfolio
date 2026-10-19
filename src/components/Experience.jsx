@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 
 import ojt1 from '../assets/ojt1.jpg'
 import ojt2 from '../assets/ojt2.jpg'
@@ -8,8 +7,6 @@ import ojt5 from '../assets/ojt5.jpg'
 import ojt6 from '../assets/ojt6.jpg'
 
 export default function Experience({ experience = [] }) {
-  if (!experience.length) return null
-  const item = experience[0]
   const slides = [ojt1, ojt2, ojt3, ojt5, ojt6]
   const [activeSlide, setActiveSlide] = useState(0)
 
@@ -22,6 +19,9 @@ export default function Experience({ experience = [] }) {
 
     return () => window.clearInterval(intervalId)
   }, [slides.length])
+
+  if (!experience.length) return null
+  const item = experience[0]
 
   const goToPreviousSlide = () => {
     setActiveSlide((currentSlide) => (currentSlide - 1 + slides.length) % slides.length)

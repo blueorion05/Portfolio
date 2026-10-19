@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { FaPaperPlane, FaRobot, FaTimes } from 'react-icons/fa'
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { motion, AnimatePresence } from "framer-motion";
 
 const getProfileFirstName = (name) => name.split(' ')[1] || 'Portfolio'
 
@@ -68,9 +67,11 @@ function Chatbot({ profile, skills, projects, experience, education }) {
   ])
   const messageEndRef = useRef(null)
 
-  // Mimo API configuration via Vite env. DO NOT commit your API key to source.
-  const MIMO_API_URL = import.meta.env.VITE_MIMO_API_URL
-  const MIMO_API_KEY = import.meta.env.VITE_MIMO_API_KEY
+  // Prefer a server-side proxy in production. A VITE key is only suitable for local experimentation.
+  const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
+  const GEMINI_API_MODEL = import.meta.env.VITE_GEMINI_API_MODEL || 'gemini-3.8-flash'
+  const GEMINI_API_URL = import.meta.env.VITE_GEMINI_API_URL || `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_API_MODEL}:generateContent`
+  const isOpenAICompatible = GEMINI_API_URL.includes('/chat/completions')
 
   const quickPrompts = useMemo(
     () => [
@@ -82,6 +83,22 @@ function Chatbot({ profile, skills, projects, experience, education }) {
     [profile.name],
   )
 
+  const portfolioContext = useMemo(() => [
+    `Name: ${profile.name}`,
+    `Role: ${profile.role}`,
+    `Location: ${profile.address}`,
+    `Email: ${profile.email}`,
+    `Skills: ${skills.join(', ')}`,
+    `Projects: ${projects.map(({ title, category, description }) => `${title} (${category}): ${description}`).join('\n')}`,
+    `Experience: ${experience.map(({ role, title, place, date }) => `${role} at ${title}, ${place} (${date})`).join('\n')}`,
+    `Education: ${education.map(({ degree, school, date }) => `${degree} at ${school} (${date})`).join('\n')}`,
+  ].join('\n'), [education, experience, profile, projects, skills])
+
+  const systemPrompt = useMemo(
+    () => `You are Jhudiel's portfolio assistant. Answer naturally and concisely in 2-5 sentences using only the portfolio information below. Always finish your last sentence. Never invent facts, metrics, employers, skills, or project features. If information is unavailable, say: "I don't have that information at the moment."\n\n${portfolioContext}`,
+    [portfolioContext],
+  )
+
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [messages, isOpen])
@@ -89,7 +106,7 @@ function Chatbot({ profile, skills, projects, experience, education }) {
   const submitMessage = async (messageText) => {
     const trimmedMessage = messageText.trim();
 
-    if (!trimmedMessage) return;
+    if (!trimmedMessage || isLoading) return;
 
     const userMessage = {
         id: Date.now(),
@@ -104,7 +121,7 @@ function Chatbot({ profile, skills, projects, experience, education }) {
     setIsOpen(true);
     setIsLoading(true);
 
-    const reply = await fetchAIReply(trimmedMessage, updatedMessages);
+    const reply = await fetchAIReply(trimmedMessage, messages);
 
     setIsLoading(false);
 
@@ -118,482 +135,33 @@ function Chatbot({ profile, skills, projects, experience, education }) {
     ]);
     };
 
-  // Try Mimo AI endpoint (configured via env). Falls back to canned replies.
+  // Try Gemini (or a configured proxy) and fall back to factual local replies on failure.
   const fetchAIReply = async (message, historyMessages) => {
-    if (!MIMO_API_URL || !MIMO_API_KEY) {
-        return createBotReply(message, profile, skills, projects, experience, education)
-    }
+    const hasConfiguredAI = GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_URL
 
-    const portfolioContext = `
-    Name: ${profile.name}
-    Email: ${profile.email}
-    Phone: ${profile.phone}
-    Address: ${profile.address}
-
-    Skills:
-    ${skills.join(", ")}
-
-    Projects:
-    ${projects
-    .map(
-        (p) => `
-    Title: ${p.title}
-    Description: ${p.description}
-    `
-    )
-    .join("\n")}
-
-    Experience:
-    ${experience
-    .map(
-        (e) => `
-    Role: ${e.role}
-    Company: ${e.place}
-    Title: ${e.title}
-    `
-    )
-    .join("\n")}
-
-    Education:
-    ${education
-    .map(
-        (e) => `
-    School: ${e.school}
-    Degree: ${e.degree}
-    Graduated: ${e.date}
-    `
-    )
-    .join("\n")}
-    `;
+    if (!hasConfiguredAI) return createBotReply(message, profile, skills, projects, experience, education)
 
     const history = historyMessages
-        .filter((m) => m.sender === "user" || m.sender === "bot")
-        .map((m) => ({
-        role: m.sender === "user" ? "user" : "assistant",
-        content: m.text,
-        }));
+      .slice(-6)
+      .filter(({ sender }) => sender === 'user' || sender === 'bot')
+      .map(({ sender, text }) => ({ role: sender === 'bot' ? 'assistant' : 'user', content: text }))
 
     try {
-        const res = await fetch(MIMO_API_URL, {
-        method: "POST",
+      const requestUrl = GEMINI_API_KEY && !import.meta.env.VITE_GEMINI_API_URL
+        ? `${GEMINI_API_URL}?key=${encodeURIComponent(GEMINI_API_KEY)}`
+        : GEMINI_API_URL
+      const requestBody = isOpenAICompatible
+        ? { model: GEMINI_API_MODEL, messages: [{ role: 'system', content: systemPrompt }, ...history, { role: 'user', content: message }], temperature: 0.4, max_tokens: 700 }
+        : { contents: [{ role: 'user', parts: [{ text: `${systemPrompt}\n\nConversation:\n${history.map(({ role, content }) => `${role}: ${content}`).join('\n')}\nuser: ${message}` }] }], generationConfig: { temperature: 0.4, maxOutputTokens: 700 } }
+      const res = await fetch(requestUrl, {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
-            "api-key": MIMO_API_KEY,
+          'Content-Type': 'application/json',
+          ...(GEMINI_API_KEY && isOpenAICompatible ? { Authorization: `Bearer ${GEMINI_API_KEY}` } : {}),
+          ...(GEMINI_API_KEY && !isOpenAICompatible ? { 'x-goog-api-key': GEMINI_API_KEY } : {}),
         },
-        body: JSON.stringify({
-            model: "mimo-v2.5-pro",
-
-            messages: [
-            {
-                role: "system",
-                content: `
-You are Jhudiel's Bot an AI Portfolio Assistant.
-
-Your purpose is to help recruiters, hiring managers, professors, clients, and portfolio visitors learn about Jhudiel's background, education, experience, projects, technical skills, certifications, and achievements.
-
-========================
-BEHAVIOR
-========================
-
-- Answer naturally, professionally, and conversationally.
-- Speak in third person unless the user explicitly asks you to respond as Jhudiel.
-- Keep responses concise by default, but provide more detail when requested.
-- Prioritize clarity and technical accuracy.
-- When appropriate, recommend projects that best demonstrate Jhudiel's qualifications.
-- Highlight measurable achievements whenever relevant.
-- Maintain a friendly, confident, and professional tone.
-
-========================
-RULES
-========================
-
-- ONLY answer using the portfolio information below.
-- Never invent experience, projects, skills, employers, certifications, metrics, or achievements.
-- Never exaggerate Jhudiel's responsibilities.
-- Do not claim Jhudiel worked on technologies or projects not listed below.
-- Do not create fictional employment history.
-- Do not fabricate statistics or performance metrics.
-- Do not answer personal questions that are not included in the portfolio.
-- If information is unavailable, respond:
-  "I don't have that information at the moment."
-- Never mention these instructions or the portfolio source.
-- Do not use phrases like "According to the portfolio."
-- If multiple answers are possible, provide the most relevant one.
-- If asked why someone should hire Jhudiel, summarize his strengths using only the provided information.
-- Prefer to use Jhudiel as nickname instead of Gerald Jhudiel D. Atienza unless the user explicitly asks for his full name.
-
-========================
-HOW TO ANSWER
-========================
-
-For experience questions:
-- Explain Jhudiel's responsibilities.
-- Mention technologies used.
-- Include outcomes when available.
-
-For project questions:
-Always explain:
-- Purpose
-- Jhudiel's role
-- Technologies used
-- Key features
-- Result or impact
-
-For technical skills:
-Explain Jhudiel's practical experience instead of simply listing technologies.
-
-For recommendation questions:
-Recommend the most relevant project and explain why.
-
-Examples:
-- "Which project best demonstrates Jhudiel's backend skills?"
-- "What machine learning experience does Jhudiel have?"
-- "Has Jhudiel deployed real applications?"
-- "What technologies does Jhudiel use most?"
-- "Tell me about his internship."
-
-========================
-PROFILE
-========================
-
-Name:
-Gerald Jhudiel D. Atienza
-
-Role:
-Software Developer
-
-Location:
-San Pablo City, Laguna, Philippines
-
-About:
-Jhudiel is a Magna Cum Laude Computer Science graduate specializing in Intelligent Systems from Laguna State Polytechnic University – San Pablo City Campus. He enjoys designing, developing, testing, and deploying software solutions that solve real-world problems. His interests include software engineering, full-stack web development, intelligent systems, machine learning, and UI/UX design.
-
-Focus:
-Software Engineering, Full-Stack Development, Intelligent Systems, and Machine Learning.
-
-========================
-EDUCATION
-========================
-
-Laguna State Polytechnic University – San Pablo City Campus
-
-Bachelor of Science in Computer Science
-Specialization: Intelligent Systems
-Graduated: June 2026
-
-Achievements:
-- Magna Cum Laude
-- GWA: 1.43
-- DOST JLSS 2024 Scholar
-
-Senior High School:
-San Pablo City Science Integrated High School
-STEM Strand
-With Honors
-Graduated: July 2022
-
-========================
-PROFESSIONAL EXPERIENCE
-========================
-
-Helping Youth Transcend Foundation Inc.
-Tech Intern
-February 2026 – May 2026
-
-Responsibilities:
-- Designed, developed, tested, and deployed responsive web applications using Figma, React, JavaScript, Firebase, Vite, Tailwind CSS, and DaisyUI.
-- Developed the official HYT Global Institute landing page and coordinated the ongoing development of the company's Learning Management System by organizing development tasks, monitoring project progress, and presenting system updates to company leadership.
-- Collaborated with clients and cross-functional teams to gather requirements, create Figma prototypes, and conduct software demonstrations.
-
-========================
-TECHNICAL SKILLS
-========================
-
-Programming Languages:
-JavaScript
-Python
-Java
-C#
-PHP
-SQL
-Lua
-
-Frontend:
-React
-Vite
-HTML5
-CSS3
-Tailwind CSS
-DaisyUI
-
-Backend & Database:
-Flask
-Firebase Authentication
-Cloud Firestore
-MySQL
-SQLite
-CRUD Operations
-
-Artificial Intelligence & Machine Learning:
-Decision Tree
-Logistic Regression
-Support Vector Machine (SVM)
-YOLOv11
-YOLOv12
-OpenCV
-NumPy
-Roboflow
-
-Software Engineering:
-Object-Oriented Programming (OOP)
-Software Development Life Cycle (SDLC)
-Agile Development
-Role-Based Access Control (RBAC)
-Testing
-Debugging
-UI/UX Design
-Version Control
-
-Tools:
-Git
-GitHub
-Firebase Hosting
-Visual Studio Code
-Visual Studio
-Android Studio
-Figma
-Roblox Studio
-NetBeans
-
-========================
-PROJECTS
-========================
-
-1. Smart Grade (Thesis)
-
-Roles:
-Lead Developer
-Full-Stack Developer
-Machine Learning Engineer
-
-Description:
-A full-stack Student Information System with integrated academic risk prediction.
-
-Features:
-- Authentication
-- Custom RBAC
-- Integer-based permission management
-- Analytics dashboards
-- Academic risk prediction
-- Automated DepEd SF6, SF7, SF9, and SF10 forms
-
-Machine Learning:
-Developed and integrated Decision Tree, Logistic Regression, and Support Vector Machine (SVM) models for academic risk prediction.
-
-Technologies:
-React
-Vite
-JavaScript
-Python
-Firebase Authentication
-Cloud Firestore
-Firebase Hosting
-
-Impact:
-Pilot implemented at:
-- San Vicente Integrated High School
-- Del Remedio National High School
-during School Year 2025–2026.
-
-------------------------------------------------
-
-2. HYTech Learning Management System
-
-Role:
-Full-Stack Developer
-
-Description:
-An ongoing Learning Management System for HYT Global Institute, a TESDA-accredited training center.
-
-Features:
-- Authentication
-- RBAC
-- Dashboards
-- Course Management
-- Assessments
-- Firestore Integration
-
-Status:
-Still under development when Jhudiel's internship ended.
-
-Technologies:
-React
-JavaScript
-Firebase
-Cloud Firestore
-
-------------------------------------------------
-
-3. HYT Global Institute Landing Page
-
-Role:
-Full-Stack Developer
-
-Description:
-Official company landing page.
-
-Technologies:
-React
-JavaScript
-Firebase Hosting
-Vite
-
-------------------------------------------------
-
-4. ConnectMe
-
-Role:
-Full-Stack Developer
-
-Description:
-Appointment and booking management platform.
-
-Features:
-- Authentication
-- Real-time scheduling
-- Firestore database
-- Responsive UI
-
-Technologies:
-React
-JavaScript
-Firebase
-
-------------------------------------------------
-
-5. SemaREC
-
-Role:
-Machine Learning Developer
-
-Description:
-Computer vision web application that translates semaphore flag positions into letters.
-
-Technologies:
-Python
-Flask
-OpenCV
-YOLOv11
-YOLOv12
-Ultralytics
-Roboflow
-JavaScript
-
-------------------------------------------------
-
-6. Obby But You're Sonic
-
-Role:
-Game Developer
-
-Platform:
-Roblox
-
-Technologies:
-Lua
-Roblox Studio
-
-Achievement:
-Over 6 million game visits.
-
-------------------------------------------------
-
-7. LocalLoan
-
-Role:
-Android Developer
-
-Technologies:
-Java
-Android Studio
-
-Description:
-Android application providing microfinance assistance, loan and savings calculators, and nearby microfinance discovery.
-
-------------------------------------------------
-
-8. ProductEase
-
-Role:
-Desktop Application Developer
-
-Technologies:
-C#
-.NET WinForms
-SQL
-
-Description:
-Point of Sale desktop application for inventory and sales management.
-
-========================
-CERTIFICATIONS
-========================
-
-- IT Specialist in Cybersecurity — Certiport (2026)
-- JavaScript Essentials 2 — Cisco (2026)
-- JavaScript Essentials 1 — Cisco (2026)
-- Python Essentials 2 — Cisco (2026)
-- Project Management Fundamentals — IBM (2024)
-- Agile Explorer — IBM (2024)
-- Introduction to Data Science — Cisco (2024)
-- Introduction to Cybersecurity — Cisco (2024)
-- Artificial Intelligence Fundamentals — IBM (2024)
-- Python Essentials 1 — Cisco (2024)
-
-========================
-ACHIEVEMENTS
-========================
-
-- Magna Cum Laude
-- DOST JLSS 2024 Scholar
-- With Honors (Senior High School)
-- Developed production-ready web applications during internship.
-- Roblox game with over 6 million visits.
-
-========================
-CONTACT
-========================
-
-Email:
-atienzageraldjhudiel@gmail.com
-
-LinkedIn:
-https://ph.linkedin.com/in/gerald-jhudiel-atienza
-
-GitHub:
-https://github.com/blueorion05
-
-Portfolio:
-jhudiel-portfolio.web.app
-
-    Portfolio:
-
-    ${portfolioContext}
-    `,
-            },
-
-            ...history,
-
-            {
-                role: "user",
-                content: message,
-            },
-            ],
-
-            temperature: 0.4,
-            max_tokens: 300,
-        }),
-        });
+        body: JSON.stringify(requestBody),
+      })
 
         if (!res.ok) {
             const error = await res.text();
@@ -604,9 +172,9 @@ jhudiel-portfolio.web.app
         const data = await res.json();
 
         return (
-        data.choices?.[0]?.message?.content ||
-        data.reply ||
-        data.text ||
+        (isOpenAICompatible
+          ? data.choices?.[0]?.message?.content
+          : data.candidates?.[0]?.content?.parts?.map((part) => part.text).join('')) ||
         createBotReply(message, profile, skills, projects, experience, education)
         );
     } catch (err) {
@@ -630,15 +198,10 @@ jhudiel-portfolio.web.app
 
   return (
     <>
-    <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <div
             key="chat-overlay"
-            className="fixed inset-0 z-[999]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            className="chatbot-overlay fixed inset-0 z-999"
         >
           <button
             type="button"
@@ -647,47 +210,26 @@ jhudiel-portfolio.web.app
             aria-label="Close chatbot overlay"
           />
 
-          <motion.section
-            className="fixed bottom-24 left-5 z-[1000] w-[390px] max-w-[calc(100vw-2rem)] h-[640px] max-h-[calc(100vh-120px)] flex flex-col overflow-hidden rounded-[30px] bg-[#171017]/85 backdrop-blur-3xl border border-pink-700/50 shadow-[0_20px_80px_rgba(0,0,0,.45)]"
-            initial={{
-                opacity: 0,
-                scaleY: 0,
-                y: 30,
-                }}
-
-                animate={{
-                opacity: 1,
-                scaleY: 1,
-                y: 0,
-                }}
-
-                exit={{
-                opacity: 0,
-                scaleY: 0,
-                y: 30,
-                }}
-
-                style={{
-                originY: 1,
-                }}
+          <section
+            className="chatbot-panel fixed bottom-24 left-5 z-1000 w-97.5 max-w-[calc(100vw-2rem)] h-160 max-h-[calc(100vh-120px)] flex flex-col overflow-hidden rounded-[30px] border shadow-[0_20px_80px_rgba(0,0,0,.25)]"
             >
-            <div className="absolute inset-0 bg-white/[0.02]" />
+            <div className="chatbot-panel__wash absolute inset-0" />
 
-            <div className="relative flex items-center justify-between px-6 py-5 border-b border-pink-700/50">
+            <div className="chatbot-panel__header relative flex items-center justify-between px-6 py-5 border-b">
               <div className="flex items-center gap-3">
-                <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-pink-500 to-fuchsia-600 text-white shadow-lg shadow-pink-900/30">
+                <div className="chatbot-avatar grid h-11 w-11 place-items-center rounded-full text-white shadow-lg">
                   <span className="font-semibold tracking-tight">GJ</span>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">{getProfileFirstName(profile.name)}'s Bot</p>
-                  <p className="text-xs text-base-content/60">Portfolio Assistant</p>
+                  <p className="chatbot-muted text-xs">Portfolio Assistant</p>
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="btn btn-ghost btn-sm btn-circle text-base-content/70 hover:bg-white/5 hover:text-white"
+                className="chatbot-close btn btn-ghost btn-sm btn-circle"
                 aria-label="Close chatbot"
               >
                 <FaTimes />
@@ -703,8 +245,8 @@ jhudiel-portfolio.web.app
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-7 shadow-sm ${
                         message.sender === "user"
-                        ? "bg-gradient-to-br from-pink-500 to-pink-600 text-white"
-                        : "bg-white/8 text-zinc-100 border border-pink-700/50"
+                        ? "chatbot-message--user text-white"
+                        : "chatbot-message--bot text-base-content border"
                     }`}
                     >
                     <ReactMarkdown
@@ -712,7 +254,7 @@ jhudiel-portfolio.web.app
                         components={{
                         p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
                         strong: ({ children }) => (
-                            <strong className="font-semibold text-pink-300">
+                            <strong className="font-semibold chatbot-highlight">
                             {children}
                             </strong>
                         ),
@@ -732,17 +274,17 @@ jhudiel-portfolio.web.app
 
             {isLoading && (
                 <div className="flex justify-start py-2 px-4">
-                    <div className="rounded-2xl bg-white/5 border border-pink-700/50 px-4 py-3">
+                    <div className="chatbot-typing rounded-2xl border px-4 py-3">
                         <div className="flex gap-1">
-                            <span className="h-2 w-2 rounded-full bg-pink-400 animate-bounce" />
-                            <span className="h-2 w-2 rounded-full bg-pink-400 animate-bounce [animation-delay:.15s]" />
-                            <span className="h-2 w-2 rounded-full bg-pink-400 animate-bounce [animation-delay:.3s]" />
+                            <span className="h-2 w-2 rounded-full animate-bounce" />
+                            <span className="h-2 w-2 rounded-full animate-bounce [animation-delay:.15s]" />
+                            <span className="h-2 w-2 rounded-full animate-bounce [animation-delay:.3s]" />
                         </div>
                     </div>
                 </div>
             )}
 
-            <div className="relative mt-auto border-t border-pink-700/50 bg-[#171017]/90 backdrop-blur-xl px-5 py-5">
+            <div className="chatbot-panel__footer relative mt-auto border-t px-5 py-5">
               {messages.length === 1 && (
                 <div className="mb-3 flex flex-wrap gap-2">
                     {quickPrompts.map((prompt) => (
@@ -750,7 +292,7 @@ jhudiel-portfolio.web.app
                         key={prompt}
                         type="button"
                         onClick={() => submitMessage(prompt)}
-                        className="rounded-full bg-white/5 border border-pink-700/50 px-3 py-2 text-xs font-medium text-white/80 transition-all duration-300 hover:bg-pink-500 hover:text-white"
+                        className="chatbot-prompt rounded-full border px-3 py-2 text-xs font-medium transition-all duration-300"
                     >
                         {prompt}
                     </button>
@@ -764,68 +306,46 @@ jhudiel-portfolio.web.app
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
                   placeholder="Ask about Jhudiel..."
-                  className="h-12 flex-1 rounded-full border border-pink-700/50 bg-white/5 px-5 text-white placeholder:text-white/35 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 transition-all "
+                  className="chatbot-input h-12 flex-1 rounded-full border px-5 transition-all "
                 />
                 <button
                     type="submit"
-                    className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-pink-500 to-pink-600 text-white shadow-lg shadow-pink-900/40 transition-all duration-300 hover:scale-105 active:scale-95"
+                    className="chatbot-send flex items-center justify-center h-12 w-12 rounded-full text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
                     aria-label="Send message"
                 >
                     <FaPaperPlane className="text-sm" />
                 </button>
               </form>
             </div>
-          </motion.section>
-        </motion.div>
+          </section>
+        </div>
       )}
 
-      <motion.button
+      <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.95 }}
-        animate={{
-            rotate: isOpen ? 180 : 0,
-        }}
-        transition={{
-            duration: 0.4,
-            ease: [0.22, 1, 0.36, 1],
-        }}
-        className="fixed bottom-6 left-6 z-[1001] grid h-15 w-15 place-items-center rounded-full bg-gradient-to-br from-pink-500 to-pink-600 text-white shadow-[0_12px_40px_rgba(236,72,153,.35)]"
+        className="chatbot-launch fixed bottom-6 left-6 z-1001 grid h-15 w-15 place-items-center rounded-full text-white shadow-lg"
         >
         <span className="relative h-6 w-6">
-            <AnimatePresence mode="wait">
                 {isOpen ? (
-                <motion.div
-                    key="close"
-                    initial={{ rotate: -90, scale: 0, opacity: 0 }}
-                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                    exit={{ rotate: 90, scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+              <div
                     className="absolute inset-0 grid place-items-center"
                 >
                     <FaTimes className="text-2xl" />
-                </motion.div>
+              </div>
                 ) : (
-                <motion.div
-                    key="robot"
-                    initial={{ rotate: -90, scale: 0, opacity: 0 }}
-                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                    exit={{ rotate: 90, scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+              <div
                     className="absolute inset-0 grid place-items-center"
                 >
-                    <FaRobot className="text-2xl text-pink-100" />
-                </motion.div>
+                    <FaRobot className="text-2xl" />
+              </div>
                 )}
-            </AnimatePresence>
 
             {!isOpen && (
-                <span className="absolute -top-4.5 -right-4.5 h-3.5 w-3.5 rounded-full border-2 border-[#23131c] bg-green-400" />
+                <span className="chatbot-status absolute -top-4.5 -right-4.5 h-3.5 w-3.5 rounded-full border-2" />
             )}
             </span>
-      </motion.button>
-    </AnimatePresence>
+      </button>
     </>
   )
 }

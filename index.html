@@ -2,9 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jhudiel's Portfolio</title>
+    <meta name="description" content="Portfolio of Gerald Jhudiel D. Atienza, a Computer Science graduate building thoughtful digital experiences and intelligent systems." />
+    <meta name="theme-color" content="#faf7f4" />
+    <title>Gerald Jhudiel D. Atienza | Software Developer</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem('portfolio-theme')
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : systemTheme
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { MotionConfig } from 'motion/react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import AboutSection from './components/AboutSection'
@@ -7,7 +8,7 @@ import Skills from './components/Skills'
 import Contact from './components/Contact'
 import Chatbot from './components/Chatbot'
 import data from './data'
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowUp } from 'react-icons/fa'
 
 const validSectionPaths = new Set(['home', ...data.navigationLinks.map((link) => link.href.replace(/^\//, ''))])
 const sectionOrder = ['home', ...data.navigationLinks.map((link) => link.href.replace(/^\//, ''))]
@@ -21,9 +22,21 @@ const getSectionIdFromPath = (pathname) => {
 }
 
 function App() {
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = window.localStorage.getItem('portfolio-theme')
+
+    if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
+
+    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
   const [scrollProgress, setScrollProgress] = useState(0)
   const [heroNameVisible, setHeroNameVisible] = useState(true)
   const [activeSection, setActiveSection] = useState('home')
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    window.localStorage.setItem('portfolio-theme', theme)
+  }, [theme])
 
   const scrollToSection = (pathname, behavior = 'auto') => {
     const sectionId = getSectionIdFromPath(pathname)
@@ -110,13 +123,15 @@ function App() {
   }, [])
 
   return (
-    <main data-theme="night" className="min-h-screen w-full overflow-x-hidden bg-slate-950/80 text-base-content">
+    <MotionConfig reducedMotion="user">
+      <main className="site-shell">
       <Header
         navigationLinks={data.navigationLinks}
         heroNameVisible={heroNameVisible}
-        scrollProgress={scrollProgress}
         activeSection={activeSection}
         onNavigateSection={handleSectionNavigation}
+        theme={theme}
+        onToggleTheme={() => setTheme((currentTheme) => currentTheme === 'light' ? 'dark' : 'light')}
       />
 
       <div className="w-full">
@@ -136,11 +151,12 @@ function App() {
         <Contact profile={data.profile} />
       </div>
 
-      <footer className="border-t border-base-300/40 bg-base-200/60 px-4 py-6 text-center text-sm text-base-content/70 sm:px-6 lg:px-10">
-        <p>© 2026 Gerald Jhudiel D. Atienza. All rights reserved.</p>
-        <p className="mt-2">
-          Built with <span aria-hidden="true">React + Javascript + Vite + Tailwind CSS + DaisyUI</span>
-        </p>
+      <footer className="site-footer">
+        <div className="site-footer__inner">
+          <p className="wordmark">GJDA<span>.</span></p>
+          <p>© 2026 Gerald Jhudiel D. Atienza</p>
+          <a href="mailto:atienzageraldjhudiel@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
+        </div>
       </footer>
 
       <Chatbot
@@ -155,14 +171,15 @@ function App() {
         <button
           type="button"
           onClick={handleBackToTop}
-          className="btn btn-circle bg-pink-700 fixed bottom-5 right-5 z-50 border-none shadow-2xl shadow-black/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+          className="back-to-top"
           aria-label="Back to top"
           title="Back to top"
         >
           <FaArrowUp className="text-lg leading-none" />
         </button>
       )}
-    </main>
+      </main>
+    </MotionConfig>
   )
 }
 

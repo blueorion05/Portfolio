@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion as Motion } from 'motion/react'
 
 const getSectionIdFromPath = (pathname) => pathname.replace(/^\/+|\/+$/g, '') || 'home'
 
-export default function Header({ navigationLinks = [], heroNameVisible, scrollProgress = 0, activeSection = 'home', onNavigateSection }) {
+export default function Header({ navigationLinks = [], heroNameVisible, activeSection = 'home', onNavigateSection, theme = 'light', onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const handleLinkClick = () => {
@@ -18,50 +18,48 @@ export default function Header({ navigationLinks = [], heroNameVisible, scrollPr
     }
   }
 
+  const themeLabel = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+
+  const themeToggle = (
+    <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={themeLabel} title={themeLabel}>
+      {theme === 'light' ? (
+        <svg viewBox="0 0 24 24" className="theme-toggle__icon" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" className="theme-toggle__icon" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z" />
+        </svg>
+      )}
+    </button>
+  )
+
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 lg:border-b lg:border-pink-700/40 lg:bg-slate-950/80 lg:backdrop-blur-xl ${!heroNameVisible || menuOpen ? 'border-b border-base-300/40 bg-base-100/80 backdrop-blur-xl' : 'bg-transparent backdrop-blur-none'}`}>
-      <div className="relative flex w-full flex-col gap-4 px-4 py-4 sm:px-6 lg:px-10 lg:flex-row lg:items-center lg:justify-center lg:gap-150">
+    <header className={`site-header ${!heroNameVisible || menuOpen ? 'site-header--scrolled' : ''}`}>
+      <div className="site-header__inner">
         <div className="flex items-center justify-between gap-3 lg:justify-start">
           <a
             href="/home"
             onClick={(event) => handleSectionClick(event, "/home")}
-            className={`relative overflow-hidden btn bg-pink-700 btn-sm rounded-full px-5 font-black tracking-wide shadow-lg transition-all duration-500 sm:btn-md transition-all duration-500 ease-out hover:bg-pink-800 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 ${
-              !heroNameVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 -translate-y-full pointer-events-none"
-            }`}
+            className="wordmark"
           >
-            <motion.span
-              className="pointer-events-none absolute inset-y-0 w-12 bg-gradient-to-r from-transparent via-white/60 to-transparent"
-              initial={{ x: "-300%" }}
-              animate={{ x: "300%" }}
-              transition={{
-                duration: 0.8,
-                repeat: Infinity,
-                repeatDelay: 2.2,
-                ease: "easeInOut",
-              }}
-            />
-
-            <span className="relative z-10">
-              Gerald Jhudiel D. Atienza
-            </span>
+            <span className="wordmark__mark">GJ</span><span className="wordmark__letters">DA<span>.</span></span>
           </a>
 
           <button
             type="button"
-            className="btn btn-ghost btn-circle lg:hidden xl:hidden"
+            className="menu-toggle"
             aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={menuOpen}
             aria-controls="primary-navigation"
             onClick={() => setMenuOpen((open) => !open)}>
             {menuOpen ? (
-              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="icon" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M18 6 6 18" />
                 <path d="M6 6l12 12" />
               </svg>
             ) : (
-              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="icon" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 6h16" />
                 <path d="M4 12h16" />
                 <path d="M4 18h16" />
@@ -70,7 +68,7 @@ export default function Header({ navigationLinks = [], heroNameVisible, scrollPr
           </button>
         </div>
 
-        <nav id="primary-navigation" className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-2 lg:flex lg:flex-row lg:justify-end`} aria-label="Primary">
+        <nav id="primary-navigation" className={`primary-nav ${menuOpen ? 'primary-nav--open' : ''}`} aria-label="Primary">
           {navigationLinks.map((link) => (
             (() => {
               const isActive = getSectionIdFromPath(link.href) === activeSection
@@ -81,36 +79,21 @@ export default function Header({ navigationLinks = [], heroNameVisible, scrollPr
               href={link.href}
               onClick={(event) => handleSectionClick(event, link.href)}
               aria-current={isActive ? 'page' : undefined}
-              className={`group relative btn btn-ghost
-                !bg-transparent
-                !border-transparent
-                !shadow-none
-                hover:!bg-transparent
-                hover:!border-transparent
-                active:!bg-transparent
-                focus:!bg-transparent
-                overflow-hidden px-4 duration-300 ${
+              className={`nav-link ${
                   isActive
-                    ? 'text-pink-400'
-                    : 'text-base-content/75 hover:text-pink-400'
+                    ? 'nav-link--active'
+                    : ''
                 }`}>
               <span className="relative z-10">{link.label}</span>
-              <span
-                aria-hidden="true"
-                className={`pointer-events-none absolute inset-x-4 bottom-2 h-0.5 origin-left rounded-full bg-pink-700 transition-transform duration-300 ease-out ${isActive ? 'scale-x-100' : 'scale-x-0'}`}
-              />
+              {isActive && <Motion.span className="nav-link__indicator" layoutId="active-nav-indicator" transition={{ type: 'spring', stiffness: 520, damping: 34 }} aria-hidden="true" />}
             </a>
               )
             })()
           ))}
+          <span className="nav-divider" aria-hidden="true" />
+          {themeToggle}
         </nav>
 
-        <div className={`absolute inset-x-0 bottom-0 h-1 overflow-hidden ${!heroNameVisible ? 'bg-base-300/20' : 'hidden lg:block'}`}>
-          <span
-            className="block h-full origin-left rounded-full bg-gradient-to-r from-amber-400 via-sky-400 to-emerald-400 transition-transform duration-300"
-            style={{ transform: `scaleX(${scrollProgress})` }}
-          />
-        </div>
       </div>
     </header>
   )

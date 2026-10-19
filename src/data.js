@@ -104,7 +104,7 @@ export const projects = [
   },
   {
     title: 'Obby But You’re Sonic',
-    category: 'Roblox Game',
+    category: 'Game',
     stack: 'Lua, Roblox Studio',
     siteUrl: 'https://www.roblox.com/games/15968247773/Obby-But-You-re-Sonic',
     description:
