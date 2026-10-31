@@ -8,7 +8,7 @@ import Skills from './components/Skills'
 import Contact from './components/Contact'
 import Chatbot from './components/Chatbot'
 import data from './data'
-import { FaArrowUp } from 'react-icons/fa'
+import { FaArrowUp, FaArrowUpRightFromSquare } from 'react-icons/fa6'
 
 const validSectionPaths = new Set(['home', ...data.navigationLinks.map((link) => link.href.replace(/^\//, ''))])
 const sectionOrder = ['home', ...data.navigationLinks.map((link) => link.href.replace(/^\//, ''))]
@@ -155,7 +155,7 @@ function App() {
         <div className="site-footer__inner">
           <p className="wordmark">GJDA<span>.</span></p>
           <p>© 2026 Gerald Jhudiel D. Atienza</p>
-          <a href="mailto:atienzageraldjhudiel@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
+          <a href="mailto:atienzageraldjhudiel@gmail.com">Start a conversation <FaArrowUpRightFromSquare aria-hidden="true" /></a>
         </div>
       </footer>
 

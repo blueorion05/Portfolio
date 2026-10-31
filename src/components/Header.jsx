@@ -37,7 +37,7 @@ export default function Header({ navigationLinks = [], heroNameVisible, activeSe
   return (
     <header className={`site-header ${!heroNameVisible || menuOpen ? 'site-header--scrolled' : ''}`}>
       <div className="site-header__inner">
-        <div className="flex items-center justify-between gap-3 lg:justify-start">
+        <div className="site-header__brand">
           <a
             href="/home"
             onClick={(event) => handleSectionClick(event, "/home")}
@@ -45,28 +45,28 @@ export default function Header({ navigationLinks = [], heroNameVisible, activeSe
           >
             <span className="wordmark__mark">GJ</span><span className="wordmark__letters">DA<span>.</span></span>
           </a>
-
-          <button
-            type="button"
-            className="menu-toggle"
-            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={menuOpen}
-            aria-controls="primary-navigation"
-            onClick={() => setMenuOpen((open) => !open)}>
-            {menuOpen ? (
-              <svg viewBox="0 0 24 24" className="icon" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M18 6 6 18" />
-                <path d="M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" className="icon" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M4 6h16" />
-                <path d="M4 12h16" />
-                <path d="M4 18h16" />
-              </svg>
-            )}
-          </button>
         </div>
+
+        <button
+          type="button"
+          className="menu-toggle"
+          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setMenuOpen((open) => !open)}>
+          {menuOpen ? (
+            <svg viewBox="0 0 24 24" className="icon" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18" />
+              <path d="M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" className="icon" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M4 6h16" />
+              <path d="M4 12h16" />
+              <path d="M4 18h16" />
+            </svg>
+          )}
+        </button>
 
         <nav id="primary-navigation" className={`primary-nav ${menuOpen ? 'primary-nav--open' : ''}`} aria-label="Primary">
           {navigationLinks.map((link) => (

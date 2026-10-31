@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion as Motion } from 'motion/react'
+import { FaArrowDown, FaArrowUpRightFromSquare } from 'react-icons/fa6'
 import profilePic from '../assets/profilepic.jpg'
 
 export default function Hero({ profile, onHeroVisibilityChange, onNavigateSection }) {
@@ -39,12 +40,12 @@ export default function Hero({ profile, onHeroVisibilityChange, onNavigateSectio
           <Motion.h1 className="hero-title hero-copy__item" variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: .38, ease: 'easeOut' }}>I build digital worlds with <em>intelligence.</em></Motion.h1>
           <Motion.p className="hero-intro hero-copy__item" variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: .3 }}>I&apos;m {profile.name}, a Magna Cum Laude Computer Science graduate specializing in Intelligent Systems. I build practical web applications, interfaces, and tools that make complex ideas feel clear.</Motion.p>
           <Motion.div className="hero-actions" variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: .28 }}>
-            <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="button button--accent">Explore experiences <span aria-hidden="true">↗</span></a>
-            <a href="/about" onClick={(event) => handleSectionClick(event, '/about')} className="text-link">View profile <span aria-hidden="true">↓</span></a>
+            <a href="/projects" onClick={(event) => handleSectionClick(event, '/projects')} className="button button--accent">Explore experiences <FaArrowUpRightFromSquare aria-hidden="true" /></a>
+            <a href="/about" onClick={(event) => handleSectionClick(event, '/about')} className="text-link">View profile <FaArrowDown aria-hidden="true" /></a>
           </Motion.div>
           <Motion.div className="hero-socials" aria-label="Social links" variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} transition={{ duration: .3 }}>
-            <a href="https://github.com/blueorion05" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
-            <a href="https://www.linkedin.com/in/gerald-jhudiel-atienza/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+            <a href="https://github.com/blueorion05" target="_blank" rel="noreferrer">GitHub <FaArrowUpRightFromSquare aria-hidden="true" /></a>
+            <a href="https://www.linkedin.com/in/gerald-jhudiel-atienza/" target="_blank" rel="noreferrer">LinkedIn <FaArrowUpRightFromSquare aria-hidden="true" /></a>
           </Motion.div>
         </Motion.div>
 
